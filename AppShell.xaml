@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MD3SQLite.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MD3SQLite"
+    xmlns:Views="clr-namespace:MD3SQLite.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="MD3SQLite">
+
+    <ShellContent
+        Title="Main Page"
+        ContentTemplate="{DataTemplate Views:MainPage}" 
+        Route="MainPage"/>
+
+    <ShellContent
+        Title="Student Page"
+        ContentTemplate="{DataTemplate Views:StudentPage}" 
+        Route="StudentPage"/>
+</Shell>

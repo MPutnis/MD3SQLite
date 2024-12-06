@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MD3SQLite.ViewModels"
+             x:Class="MD3SQLite.Views.MainPage"
+             Title="Main Page">
+
+    <StackLayout Padding="10">
+        <Label Text="Database Statistics" FontSize="Large" />
+        <Label Text="{Binding DatabaseStatistics}" />
+
+        <Button Text="Go to Students" Command="{Binding NavigateToStudentsCommand}" />
+        <!--<Button Text="Go to Teachers" Command="{Binding NavigateToTeachersCommand}" />-->
+        <!-- Add more buttons for other pages -->
+
+        <Button Text="Seed Database" Command="{Binding SeedDatabaseCommand}" />
+        <Button Text="Clear Database" Command="{Binding ClearDatabaseCommand}" />
+    </StackLayout>
+</ContentPage>

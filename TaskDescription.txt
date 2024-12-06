@@ -1,0 +1,73 @@
+Izveidot .NET MAUI ( iepriekð saskaòojot ar pasniedzçju var izmantot 
+citu ietvaru darbavirsmas vai daudzplatformu lietotòu bûvei, 
+piemçram WPF, Avolonia UI, ..) lietotni, darbam ar datubâzi.
+
+1. Lietotnç lietotâjam draudzîgâ veidâ jâvar veikt visas CRUD 
+	(create, read, update, delete – jaunu datu izveide, esoðo datu apskate, 
+	esoðo datu laboðana, esoðo datu dzçðana) operâcijas 3. punktâ minçtajiem datiem. 
+	Lietotâjam nedrîkst râdît – lietotâjam nesaprotamus datus, piemçram, 
+	tehniskus identifikatorus (ID lauku vçrtîbas);
+
+2. Lietotnei jâstrâdâ ar 1. mâjas darbâ apskatîto datushçmu. 
+	(Klases: Teacher, Student, Course, Assignment, Submission; Saturîgie lauki kâ 1. mâjas darbâ.)
+
+	Teacher - 1:N -> Course - 1:N -> Assignment - 1:N -> Submission <- N:1 - Student
+
+3. Lietotnç jâvar veikt ðâdas darbîbas:
+
+	- Jâvar veikt CRUD operâcijas tabulu Student (vai Course), Assignment un Submission datiem.
+
+	- Uzdevumam (Assignement) jâvar, norâdît kursu (Course). 
+		Jâvar uzzinât kursa (Course) uzdevumus (Assignments). 
+		Iesniegumam (Submission) jâvar norâdît (arî mainît, apskatît)  
+			studentu (Student) un uzdevumu (Assignement).
+
+4. Jûs varat veidot paði savu shçmu vai izmantot doto.  
+	Ja Jûs izmantojat shçmu, kas atðíirâs no dotâs Jums kopâ ar mâjas darbu (viens no ðiem):
+
+	a)  ir jâiesniedz SQL skripts (1 fails), kas izveido testa datubâzi un uzìenerç testa datus. 
+		Skriptam jâizpildâs bez kïûdâm.  
+		Skriptâ nedrîkst ieðût datu bâzes vârdu.  |
+
+	b)  jâizveido migrâcija, kas izveidos atbilstoðu datu bâzi.
+
+	c) jâiesniedz lokâlais datubâzes fails.
+
+	d) lietotnç jâiestrâdâ kods, kas izveido DB un testa datus.
+
+Lûdzu norâdiet komentâros kurð variants tika izvçlçts.
+
+Papildus tam: 
+
+	- Veidojot datubâzes struktûru, jâievçro 2. punktâ minçtâs prasîbas datubâzei.
+
+	- Testa datiem jâdemonstrç pilnvçrtîgu ar Jûsu lietotni izveidojamo datu kopu,
+		t.i., jânodemonstrç visi strukturâli daþâdie, bet loìiski iespçjamie datu veidi.
+
+5. Connection string jânolasa no faila „C:\Temp\ConnS.txt” \
+	vai jâlieto viens connection string, kas norâdîts konfigurâcijas datnç Appsettings.json
+	(vai App.config citiem projektu veidiem). 
+	
+	Connection string kodâ ieðût nedrîkst!!!!!
+
+6. Visâm darbîbâm ar datu bâzi jâbût iekïautâm Try – Catch blokâ, 
+	un, pazûdot konekcijai ar datubâzi, tas ir jâpaziòo lietotâjam saprotamâ veidâ.
+
+Papilduzdevums:
+Realizçt visas CRUD operâcijas vienai datubâzes modeïa klasei 
+(Student vai Course, vai Submission, vai Assignment) lietojot MVVM pieeju.
+
+Lûdzu norâdiet komentâros, kâda datu modeïa klase izvçlçta, 
+kâdi ir atbilstoðie skati (Views) un skatumodeïi (Viewmodels).
+
+Iesniegtais kods drîkst sakrist ar iesniedzçja 3. mâjas darba kodu. 
+(drîkst arî atsíirties) Ja kods sakrît ar 3. MD, tad var arî iesniegt 
+tikai teksta dokumentu, kur norâdîts, ka jâskatâs 3. mâjas darbs un 
+kâdi Vievs, Models un VievModels tur izmantoti.
+
+
+
+
+
+	Connection String:
+		Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=StudyDatabase;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False
