@@ -9,6 +9,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MD3SQLite.Models;
 using MD3SQLite.Services;
+using MD3SQLite.Views;
 
 namespace MD3SQLite.ViewModels
 {
@@ -21,7 +22,7 @@ namespace MD3SQLite.ViewModels
 
         [ObservableProperty]
         private Student? _selectedStudent;
-        //TODO: refresh student list after navigating to student page
+        //done: refresh student list after navigating to student page
         public StudentViewModel(StudentService studentService)
         {
             _studentService = studentService;
@@ -39,7 +40,8 @@ namespace MD3SQLite.ViewModels
         public IAsyncRelayCommand UpdateStudentCommand { get; }
         public IAsyncRelayCommand DeleteStudentCommand { get; }
 
-
+        // done: can't unselct a student once selected, except by reentering the page
+        // add new student works now, can live without unselcting a student
         private async Task LoadStudentsAsync()
         {
             var students = await _studentService.GetStudentsAsync();
@@ -49,20 +51,21 @@ namespace MD3SQLite.ViewModels
 
         private async Task AddStudentAsync()
         {
-            if (SelectedStudent != null)
+            var newStudent = new Student();
+            await Shell.Current.GoToAsync(nameof(StudentDetailPage), new Dictionary<string, object>
             {
-                await _studentService.SaveStudentAsync(SelectedStudent);
-                await LoadStudentsAsync();
-            }
+                { "Student", newStudent }
+            });
         }
 
         private async Task UpdateStudentAsync()
         {
             if (SelectedStudent != null)
             {
-                
-                await _studentService.SaveStudentAsync(SelectedStudent);
-                await LoadStudentsAsync();
+                await Shell.Current.GoToAsync(nameof(StudentDetailPage), new Dictionary<string, object>
+                {
+                    { "Student", SelectedStudent }
+                });
             }
         }
 

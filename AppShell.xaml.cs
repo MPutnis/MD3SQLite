@@ -29,6 +29,10 @@ namespace MD3SQLite
             {
                 Debug.WriteLine($"Error registering StudentPage route: {ex.Message}");
             }
+
+            Routing.RegisterRoute(nameof(StudentDetailPage), typeof(StudentDetailPage));
+            Routing.RegisterRoute(nameof(TeacherPage), typeof(TeacherPage));
+            Routing.RegisterRoute(nameof(TeacherDetailPage), typeof(TeacherDetailPage));
         }
     
     }

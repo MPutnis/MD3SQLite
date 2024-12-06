@@ -14,14 +14,15 @@ namespace MD3SQLite.ViewModels
 
         [ObservableProperty]
         private string _databaseStatistics;
-        // TODO: when navigating to Main page, update Databasse statistics
+        
         public MainViewModel(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
             LoadDatabaseStatistics();
         }
+        // Done: when navigating to Main page, refresh Database statistics
 
-        private async void LoadDatabaseStatistics()
+        public async void LoadDatabaseStatistics()
         {
             // Load database statistics (e.g., table names and row counts)
             var statistics = await _databaseContext.GetDatabaseStatisticsAsync();
@@ -44,12 +45,15 @@ namespace MD3SQLite.ViewModels
             }
         }
 
-        //[RelayCommand]
-        //private async Task NavigateToTeachers()
-        //{
-        //    // Navigate to TeacherPage
-        //    await Shell.Current.GoToAsync(nameof(TeacherPage));
-        //}
+        [RelayCommand]
+        private async Task NavigateToTeachers()
+        {
+            // Navigate to TeacherPage
+            if (Shell.Current != null)
+                await Shell.Current.GoToAsync(nameof(TeacherPage));
+            else
+                Debug.WriteLine("Shell.Currrent is null");
+        }
 
         [RelayCommand]
         private async Task SeedDatabase()

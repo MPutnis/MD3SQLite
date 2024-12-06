@@ -18,5 +18,15 @@ namespace MD3SQLite.Views
             BindingContext = viewModel;
             Debug.WriteLine("MainPage with ViewModel constructor called");
         }
+
+        // refresh Database statistics when navigating to Main page
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (BindingContext is MainViewModel viewModel)
+            {
+                viewModel.LoadDatabaseStatistics();
+            }
+        }
     }
 }

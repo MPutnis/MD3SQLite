@@ -11,7 +11,7 @@ namespace MD3SQLite.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int id { get; set; }
 
-        [SQLite.NotNull]
+        [SQLite.NotNull, SQLite.Unique]
         public string? StudentIdNumber { get; set; }
 
         public Student(string name, string surname, Genders gender, string studentIdNumber) 

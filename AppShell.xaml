@@ -16,5 +16,20 @@
     <ShellContent
         Title="Student Page"
         ContentTemplate="{DataTemplate Views:StudentPage}" 
-        Route="StudentPage"/>
+        Route="MainPage/StudentPage"/>
+
+    <ShellContent
+        Title="Student Detail Page"
+        ContentTemplate="{DataTemplate Views:StudentDetailPage}" 
+        Route="MainPage/StudentPage/StudentDetailPage"/>
+
+    <ShellContent
+        Title="Teacher Page"
+        ContentTemplate="{DataTemplate Views:TeacherPage}" 
+        Route="MainPage/TeacherPage"/>
+
+    <ShellContent
+        Title="Teacher Detail Page"
+        ContentTemplate="{DataTemplate Views:TeacherDetailPage}" 
+        Route="MainPage/TeacherPage/TeacherDetailPage"/>
 </Shell>

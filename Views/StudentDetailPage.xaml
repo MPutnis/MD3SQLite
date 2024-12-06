@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MD3SQLite.ViewModels"
+             x:Class="MD3SQLite.Views.StudentDetailPage"
+             Title="Student Details">
+    <StackLayout Padding="10">
+        <Label Text="Name" />
+        <Entry Text="{Binding Student.Name}" />
+
+        <Label Text="Surname" />
+        <Entry Text="{Binding Student.Surname}" />
+
+        <Label Text="Gender" />
+        <Picker ItemsSource="{Binding Genders}" SelectedItem="{Binding Student.Gender}" />
+
+        <Label Text="Student ID Number" />
+        <Entry Text="{Binding Student.StudentIdNumber}" />
+
+        <Button Text="Save" Command="{Binding SaveCommand}" />
+        <Button Text="Back" Command="{Binding NavigateBackCommand}" />
+    </StackLayout>
+</ContentPage>

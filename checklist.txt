@@ -1,0 +1,9 @@
+﻿1. Make model for class
+2. Add database operations in DatabaseContext.cs
+3. Make service class for the database operations
+4. Make view model for the class
+5. Make View for the class
+6. Define routes in AppShell.xaml
+7. Register routes in AppShell.xaml.cs
+8. Register singletons in MauiProgram.cs
+9. Add navigation to MainPage

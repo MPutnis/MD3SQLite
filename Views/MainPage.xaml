@@ -10,7 +10,7 @@
         <Label Text="{Binding DatabaseStatistics}" />
 
         <Button Text="Go to Students" Command="{Binding NavigateToStudentsCommand}" />
-        <!--<Button Text="Go to Teachers" Command="{Binding NavigateToTeachersCommand}" />-->
+        <Button Text="Go to Teachers" Command="{Binding NavigateToTeachersCommand}" />
         <!-- Add more buttons for other pages -->
 
         <Button Text="Seed Database" Command="{Binding SeedDatabaseCommand}" />
