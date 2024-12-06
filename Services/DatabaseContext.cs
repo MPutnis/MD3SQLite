@@ -22,10 +22,11 @@ namespace MD3SQLite.Services
 
             // Create the tables
             _database.CreateTableAsync<Student>().Wait();
-            // _database.CreateTableAsync<Course>().Wait();
-            // _database.CreateTableAsync<Assignment>().Wait();
-            // _database.CreateTableAsync<Submission>().Wait();
-             _database.CreateTableAsync<Teacher>().Wait();
+            _database.CreateTableAsync<Teacher>().Wait();
+            _database.CreateTableAsync<Course>().Wait();
+            _database.CreateTableAsync<Assignment>().Wait();
+            _database.CreateTableAsync<Submissions>().Wait();
+             
         }
         // task to create table, used when clearing data
         public Task CreateTableAsync<T>() where T : new()
@@ -105,33 +106,96 @@ namespace MD3SQLite.Services
         // COURSE CRUD OPERATIONS
 
         // Get all courses
-
+        public Task<List<Course>> GetCoursesAsync()
+        {
+            return _database.Table<Course>().ToListAsync();
+        }
         // Get a specific course
-
+        public Task<Course> GetCourseAsync(int id)
+        {
+            return _database.Table<Course>()
+                .Where(i => i.id == id)
+                .FirstOrDefaultAsync();
+        }
         // Save a course
-
+        public Task<int> SaveCourseAsync(Course course)
+        {
+            if (course.id != 0)
+            {
+                return _database.UpdateAsync(course);
+            }
+            else
+            {
+                return _database.InsertAsync(course);
+            }
+        }
         // Delete a course
-
+        public Task<int> DeleteCourseAsync(Course course)
+        {
+            return _database.DeleteAsync(course);
+        }
         // ASSIGNMENT CRUD OPERATIONS
 
         // Get all assignments
-
+        public Task<List<Assignment>> GetAssignmentsAsync()
+        {
+            return _database.Table<Assignment>().ToListAsync();
+        }
         // Get a specific assignment
-
+        public Task<Assignment> GetAssignmentAsync(int id)
+        {
+            return _database.Table<Assignment>()
+                .Where(i => i.id == id)
+                .FirstOrDefaultAsync();
+        }
         // Save an assignment
-
+        public Task<int> SaveAssignmentAsync(Assignment assignment)
+        {
+            if (assignment.id != 0)
+            {
+                return _database.UpdateAsync(assignment);
+            }
+            else
+            {
+                return _database.InsertAsync(assignment);
+            }
+        }
         // Delete an assignment
-
-        // SUBMISSION CRUD OPERATIONS
+        public Task<int> DeleteAssignmentAsync(Assignment assignment)
+        {
+            return _database.DeleteAsync(assignment);
+        }
+        // SUBMISSIONS CRUD OPERATIONS
 
         // Get all submissions
-
+        public Task<List<Submissions>> GetSubmissionsAsync()
+        {
+            return _database.Table<Submissions>().ToListAsync();
+        }
         // Get a specific submission
-
+        public Task<Submissions> GetSubmissionAsync(int id)
+        {
+            return _database.Table<Submissions>()
+                .Where(i => i.id == id)
+                .FirstOrDefaultAsync();
+        }
         // Save a submission
-
+        public Task<int> SaveSubmissionAsync(Submissions submission)
+        {
+            if (submission.id != 0)
+            {
+                return _database.UpdateAsync(submission);
+            }
+            else
+            {
+                return _database.InsertAsync(submission);
+            }
+        }
         // Delete a submission
-
+        public Task<int> DeleteSubmissionAsync(Submissions submission)
+        {
+            return _database.DeleteAsync(submission);
+        }
 
         // Seed test data
         public async Task SeedDataAsync()
@@ -177,11 +241,70 @@ namespace MD3SQLite.Services
             }
 
             // If there are no courses in database, insert test data
-
+            var courses = await GetCoursesAsync();
+            if (courses.Count == 0)
+            {
+                // Insert course test data
+                var testCourses = new List<Course>
+                {
+                    new Course("Mathematics", 1),
+                    new Course("English",2),
+                    new Course("Science",3),
+                    new Course("History",4),
+                    new Course("Art",5),
+                };
+                foreach (var course in testCourses)
+                {
+                    await SaveCourseAsync(course);
+                }
+            }
             // If there are no assignments in database, insert test data
-
+            var assignments = await GetAssignmentsAsync();
+            if (assignments.Count == 0)
+            {
+                // Insert assignment test data
+                var testAssignments = new List<Assignment>
+                {
+                    new Assignment(new DateTime(2022, 1, 15), 1, "Mathematics Assignment 1"),
+                    new Assignment(new DateTime(2022, 2, 15), 2, "English Assignment 1"),
+                    new Assignment(new DateTime(2022, 3, 15), 3, "Science Assignment 1"),
+                    new Assignment(new DateTime(2022, 4, 15), 4, "History Assignment 1"),
+                    new Assignment(new DateTime(2022, 5, 15), 5, "Art Assignment 1"),
+                    new Assignment(new DateTime(2023, 1, 15), 1, "Mathematics Assignment 2"),
+                    new Assignment(new DateTime(2023, 2, 15), 2, "English Assignment 2"),
+                    new Assignment(new DateTime(2023, 3, 15), 3, "Science Assignment 2"),
+                    new Assignment(new DateTime(2023, 4, 15), 4, "History Assignment 2"),
+                    new Assignment(new DateTime(2023, 5, 15), 5, "Art Assignment 2"),
+                };
+                foreach (var assignment in testAssignments)
+                {
+                    await SaveAssignmentAsync(assignment);
+                }
+            }
             // If there are no submissions in database, insert test data
+            var submissions = await GetSubmissionsAsync();
+            if (submissions.Count == 0)
+            {
+                // Insert submission test data
+                var testSubmissions = new List<Submissions>
+                {
+                    new Submissions(57, new DateTime(2022, 1, 15), 1, 1),
+                    new Submissions(78, new DateTime(2022, 2, 15), 2, 2),
+                    new Submissions(89, new DateTime(2022, 3, 15), 3, 3),
+                    new Submissions(90, new DateTime(2022, 4, 15), 4, 4),
+                    new Submissions(100, new DateTime(2022, 5, 15), 5, 5),
+                    new Submissions(67, new DateTime(2023, 1, 15), 6, 1),
+                    new Submissions(88, new DateTime(2023, 2, 15), 7, 2),
+                    new Submissions(90, new DateTime(2023, 3, 15), 8, 3),
+                    new Submissions(95, new DateTime(2023, 4, 15), 9, 4),
+                    new Submissions(100, new DateTime(2023, 5, 15), 10, 5),
 
+                };
+                foreach (var submission in testSubmissions)
+                {
+                    await SaveSubmissionAsync(submission);
+                }
+            }
         }
         // Clear all data
         public async Task ClearDataAsync()
@@ -191,9 +314,9 @@ namespace MD3SQLite.Services
             try
             {
                 // Drop the child tables
-                // await _database.DeleteAllAsync<Submission>();
-                // await _database.DeleteAllAsync<Assignment>();
-                // await _database.DeleteAllAsync<Course>();
+                 await _database.DeleteAllAsync<Submissions>();
+                 await _database.DeleteAllAsync<Assignment>();
+                 await _database.DeleteAllAsync<Course>();
 
                 // Drop the parent tables
                 await _database.DropTableAsync<Student>();
@@ -213,9 +336,9 @@ namespace MD3SQLite.Services
                 await _database.CreateTableAsync<Teacher>();
 
                 // Recreate the child tables
-                // await _database.CreateTableAsync<Course>();
-                // await _database.CreateTableAsync<Assignment>();
-                // await _database.CreateTableAsync<Submission>();
+                await _database.CreateTableAsync<Course>();
+                await _database.CreateTableAsync<Assignment>();
+                await _database.CreateTableAsync<Submissions>();
             }
             catch (Exception ex)
             {
@@ -239,16 +362,16 @@ namespace MD3SQLite.Services
             sb.AppendLine($"Teachers: {teacherCount}");
 
             // Get the number of courses
-            // var courseCount = await _database.Table<Course>().CountAsync();
-            // sb.AppendLine($"Courses: {courseCount}");
+            var courseCount = await _database.Table<Course>().CountAsync();
+            sb.AppendLine($"Courses: {courseCount}");
 
             // Get the number of assignments
-            // var assignmentCount = await _database.Table<Assignment>().CountAsync();
-            // sb.AppendLine($"Assignments: {assignmentCount}");
+             var assignmentCount = await _database.Table<Assignment>().CountAsync();
+            sb.AppendLine($"Assignments: {assignmentCount}");
 
             // Get the number of submissions
-            // var submissionCount = await _database.Table<Submission>().CountAsync();
-            // sb.AppendLine($"Submissions: {submissionCount}");
+             var submissionCount = await _database.Table<Submissions>().CountAsync();
+            sb.AppendLine($"Submissions: {submissionCount}");
 
             return sb.ToString();
         }
