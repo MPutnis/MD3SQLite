@@ -16,20 +16,27 @@ namespace MD3SQLite.ViewModels
     public partial class CourseViewModel : ObservableObject
     {
         private readonly CourseService _courseService;
+        private readonly TeacherService _teacherService;
+
         [ObservableProperty]
         private ObservableCollection<Course>? _courses;
+
         [ObservableProperty]
         private Course? _selectedCourse;
+
         //done: refresh course list after navigating to course page
-        public CourseViewModel(CourseService courseService)
+        public CourseViewModel(CourseService courseService, TeacherService teacherService)
         {
             _courseService = courseService;
+            _teacherService = teacherService;
+
             LoadCoursesCommand = new AsyncRelayCommand(LoadCoursesAsync);
             AddCourseCommand = new AsyncRelayCommand(AddCourseAsync);
             UpdateCourseCommand = new AsyncRelayCommand(UpdateCourseAsync);
             DeleteCourseCommand = new AsyncRelayCommand(DeleteCourseAsync);
             // Load the courses initially
             LoadCoursesCommand.Execute(null);
+            
         }
         public IAsyncRelayCommand LoadCoursesCommand { get; }
         public IAsyncRelayCommand AddCourseCommand { get; }
@@ -40,6 +47,10 @@ namespace MD3SQLite.ViewModels
         private async Task LoadCoursesAsync()
         {
             var courses = await _courseService.GetCoursesAsync();
+            foreach (var course in courses)
+            {
+                course.Teacher = await _teacherService.GetTeacherAsync(course.TeacherId);
+            }
             // Bind the courses to the view
             Courses = new ObservableCollection<Course>(courses);
         }

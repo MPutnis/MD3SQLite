@@ -241,6 +241,9 @@ namespace MD3SQLite.Services
                 {
                     await SaveTeacherAsync(teacher);
                 }
+
+                // Refresh the teachers list
+                teachers = await GetTeachersAsync();
             }
 
             // If there are no courses in database, insert test data
@@ -250,11 +253,11 @@ namespace MD3SQLite.Services
                 // Insert course test data
                 var testCourses = new List<Course>
                 {
-                    new("Mathematics", 1),
-                    new("English",2),
-                    new("Science",3),
-                    new("History",4),
-                    new("Art",5),
+                    new("Mathematics", teachers[0]),
+                    new("English", teachers[1]),
+                    new("Science",teachers[2]),
+                    new("History",teachers[3]),
+                    new("Art",teachers[4])
                 };
                 foreach (var course in testCourses)
                 {

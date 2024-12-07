@@ -14,6 +14,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="{Binding Id}" VerticalOptions="Center" />
                             <Label Text="{Binding FullName}" VerticalOptions="Center" />
                             <Label Text="{Binding ContractDate}" VerticalOptions="Center" Margin="10,0,0,0" />
 

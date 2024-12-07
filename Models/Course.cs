@@ -10,17 +10,23 @@ namespace MD3SQLite.Models
     {
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public int Id { get; set; }
+
         [SQLite.NotNull]
         public string? Name { get; set; }
+
         [SQLite.NotNull]
-        public int? TeacherId { get; set; }
+        public int TeacherId { get; set; }
 
         [SQLite.Ignore]
         public Teacher? Teacher { get; set; }
-        public Course(string name, int teacherId)
+
+        [SQLite.Ignore]
+        public string TeacherFullName => Teacher != null ? Teacher.FullName : string.Empty;
+        public Course(string name, Teacher teacher)
         {
             Name = name;
-            TeacherId = teacherId;
+            Teacher = teacher; 
+            TeacherId = teacher.Id;
         }
         public Course() { }
     }

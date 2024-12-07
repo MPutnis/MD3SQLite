@@ -12,28 +12,40 @@ namespace MD3SQLite.ViewModels
     public partial class CourseDetailViewModel : ObservableObject
     {
         private readonly CourseService _courseService;
+        private readonly TeacherService _teacherService;
 
         [ObservableProperty]
         private Course? _course;
 
-        public CourseDetailViewModel(CourseService courseService)
+        [ObservableProperty]
+        private ObservableCollection<Teacher>? _teachers;
+
+        [ObservableProperty]
+        private Teacher? _selectedTeacher;
+
+        public CourseDetailViewModel(CourseService courseService, TeacherService teacherService)
         {
             _courseService = courseService;
+            _teacherService = teacherService;
             SaveCommand = new AsyncRelayCommand(SaveCourseAsync);
             NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
+            LoadTeachersCommand = new AsyncRelayCommand(LoadTeachersAsync);
+            LoadTeachersCommand.Execute(null);
         }
 
         public IAsyncRelayCommand SaveCommand { get; }
         public IAsyncRelayCommand NavigateBackCommand { get; }
+        public IAsyncRelayCommand LoadTeachersCommand { get; }
 
         private async Task SaveCourseAsync()
         {
             try
             {
-                if (Course != null)
+                if (Course != null && SelectedTeacher != null)
                 {
+                    Course.TeacherId = SelectedTeacher.Id;
                     await _courseService.SaveCourseAsync(Course);
-                    Debug.WriteLine($"Course saved: {Course.Name}");
+                    Debug.WriteLine($"Course saved: {Course.Name} teacher: {SelectedTeacher.FullName}");
                     await Shell.Current.GoToAsync(".."); // Go back to the previous page
                 }
             }
@@ -49,9 +61,17 @@ namespace MD3SQLite.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-        public void Initialize(Course course)
+
+        private async Task LoadTeachersAsync()
+        {
+            var teachers = await _teacherService.GetTeachersAsync();
+            Teachers = new ObservableCollection<Teacher>(teachers);
+        }
+        public async void Initialize(Course course)
         {
             Course = course;
+            await LoadTeachersAsync();
+            SelectedTeacher = Teachers?.FirstOrDefault(t => t.Id == course.TeacherId);
         }
     }
 }

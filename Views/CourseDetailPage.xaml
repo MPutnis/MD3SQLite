@@ -7,8 +7,11 @@
     <StackLayout Padding="10">
         <Label Text="Course Name" />
         <Entry Text="{Binding Course.Name}" />
-        <Label Text="Teacher ID" />
-        <Entry Text="{Binding Course.TeacherId}" />
+        <Label Text="Teacher" />
+        <Picker ItemsSource="{Binding Teachers}"
+                ItemDisplayBinding="{Binding FullName}"
+                SelectedItem="{Binding SelectedTeacher}" />
+        
         <Button Text="Save" Command="{Binding SaveCommand}" />
         <Button Text="Back" Command="{Binding NavigateBackCommand}" />
     </StackLayout>
