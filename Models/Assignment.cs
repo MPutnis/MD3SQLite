@@ -19,13 +19,15 @@ namespace MD3SQLite.Models
 
         [SQLite.Ignore]
         public Course? Course { get; set; }
-
+        [SQLite.Ignore]
+        public string CourseName => Course != null ? Course.Name : string.Empty;
         public string? Description { get; set; }
 
-        public Assignment(DateTime deadLine, int courseId, string description)
+        public Assignment(DateTime deadLine, Course course, string description)
         {
             DeadLine = deadLine;
-            CourseId = courseId;
+            Course = course;
+            CourseId = course.Id;
             Description = description;
         }
         public Assignment() { }

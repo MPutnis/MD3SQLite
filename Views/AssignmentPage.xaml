@@ -13,7 +13,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding CourseId}" VerticalOptions="Center" />
+                            <Label Text="{Binding CourseName}" VerticalOptions="Center" />
                             <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0,0,0" />
                             <Label Text="{Binding DeadLine}" VerticalOptions="Center" Margin="10,0,0,0" />
                         </StackLayout>

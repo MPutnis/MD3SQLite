@@ -221,6 +221,9 @@ namespace MD3SQLite.Services
                 {
                     await SaveStudentAsync(student);
                 }
+
+                // Refresh the students list
+                students = await GetStudentsAsync();
             }
 
             // If there are no teachers in database, insert test data
@@ -263,6 +266,9 @@ namespace MD3SQLite.Services
                 {
                     await SaveCourseAsync(course);
                 }
+
+                // Refresh the courses list
+                courses = await GetCoursesAsync();
             }
             // If there are no assignments in database, insert test data
             var assignments = await GetAssignmentsAsync();
@@ -271,21 +277,24 @@ namespace MD3SQLite.Services
                 // Insert assignment test data
                 var testAssignments = new List<Assignment>
                 {
-                    new(new DateTime(2022, 1, 15), 1, "Mathematics Assignment 1"),
-                    new(new DateTime(2022, 2, 15), 2, "English Assignment 1"),
-                    new(new DateTime(2022, 3, 15), 3, "Science Assignment 1"),
-                    new(new DateTime(2022, 4, 15), 4, "History Assignment 1"),
-                    new(new DateTime(2022, 5, 15), 5, "Art Assignment 1"),
-                    new(new DateTime(2023, 1, 15), 1, "Mathematics Assignment 2"),
-                    new(new DateTime(2023, 2, 15), 2, "English Assignment 2"),
-                    new(new DateTime(2023, 3, 15), 3, "Science Assignment 2"),
-                    new(new DateTime(2023, 4, 15), 4, "History Assignment 2"),
-                    new(new DateTime(2023, 5, 15), 5, "Art Assignment 2"),
+                    new(new DateTime(2022, 1, 15), courses[0], "Mathematics Assignment 1"),
+                    new(new DateTime(2022, 2, 15), courses[1], "English Assignment 1"),
+                    new(new DateTime(2022, 3, 15), courses[2], "Science Assignment 1"),
+                    new(new DateTime(2022, 4, 15), courses[3], "History Assignment 1"),
+                    new(new DateTime(2022, 5, 15), courses[4], "Art Assignment 1"),
+                    new(new DateTime(2023, 1, 15), courses[0], "Mathematics Assignment 2"),
+                    new(new DateTime(2023, 2, 15), courses[1], "English Assignment 2"),
+                    new(new DateTime(2023, 3, 15), courses[2], "Science Assignment 2"),
+                    new(new DateTime(2023, 4, 15), courses[3], "History Assignment 2"),
+                    new(new DateTime(2023, 5, 15), courses[4], "Art Assignment 2"),
                 };
                 foreach (var assignment in testAssignments)
                 {
                     await SaveAssignmentAsync(assignment);
                 }
+
+                // Refresh the assignments list
+                assignments = await GetAssignmentsAsync();
             }
             // If there are no submissions in database, insert test data
             var submissions = await GetSubmissionsAsync();
@@ -294,16 +303,16 @@ namespace MD3SQLite.Services
                 // Insert submission test data
                 var testSubmissions = new List<Submission>
                 {
-                    new(57, new DateTime(2022, 1, 15), 1, 1),
-                    new(78, new DateTime(2022, 2, 15), 2, 2),
-                    new(89, new DateTime(2022, 3, 15), 3, 3),
-                    new(90, new DateTime(2022, 4, 15), 4, 4),
-                    new(100, new DateTime(2022, 5, 15), 5, 5),
-                    new(67, new DateTime(2023, 1, 15), 6, 1),
-                    new(88, new DateTime(2023, 2, 15), 7, 2),
-                    new(90, new DateTime(2023, 3, 15), 8, 3),
-                    new(95, new DateTime(2023, 4, 15), 9, 4),
-                    new(100, new DateTime(2023, 5, 15), 10, 5),
+                    new(57, new DateTime(2022, 1, 15), assignments[0], students[0]),
+                    new(78, new DateTime(2022, 2, 15), assignments[1], students[1]),
+                    new(89, new DateTime(2022, 3, 15), assignments[2], students[2]),
+                    new(90, new DateTime(2022, 4, 15), assignments[3], students[3]),
+                    new(100, new DateTime(2022, 5, 15), assignments[4], students[4]),
+                    new(67, new DateTime(2023, 1, 15), assignments[5], students[0]),
+                    new(88, new DateTime(2023, 2, 15), assignments[6], students[1]),
+                    new(90, new DateTime(2023, 3, 15), assignments[7], students[2]),
+                    new(95, new DateTime(2023, 4, 15), assignments[8], students[3]),
+                    new(100, new DateTime(2023, 5, 15), assignments[9], students[4]),
 
                 };
                 foreach (var submission in testSubmissions)

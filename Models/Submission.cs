@@ -16,21 +16,27 @@ namespace MD3SQLite.Models
 
         [SQLite.Ignore]
         public Assignment? Assignment { get; set; }
+        [SQLite.Ignore]
+        public string AssignmentName => Assignment != null ? Assignment.Description : string.Empty;
 
         [SQLite.NotNull]
         public int StudentId { get; set; }
 
         [SQLite.Ignore]
+        public string StudentIdNumber => Student != null ? Student.StudentIdNumber : string.Empty;
+        [SQLite.Ignore]
         public Student? Student { get; set; }
 
         public DateTime? SubmissionTime { get; set; }
         public int? Score { get; set; }
-        public Submission(int score, DateTime submissionTime, int assignmentId, int studentId)
+        public Submission(int score, DateTime submissionTime, Assignment assignment, Student student)
         {
             Score = score;
             SubmissionTime = submissionTime;
-            AssignmentId = assignmentId;
-            StudentId = studentId;
+            Assignment = assignment;
+            Student = student;
+            AssignmentId = assignment.Id;
+            StudentId = student.Id;
         }
         public Submission() { }
     }

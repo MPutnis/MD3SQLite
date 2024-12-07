@@ -16,14 +16,19 @@ namespace MD3SQLite.ViewModels
     public partial class AssignmentViewModel : ObservableObject
     {
         private readonly AssignmentService _assignmentService;
+        private readonly CourseService _courseService;
+
         [ObservableProperty]
         private ObservableCollection<Assignment>? _assignments;
+
         [ObservableProperty]
         private Assignment? _selectedAssignment;
+
         //done: refresh assignment list after navigating to assignment page
-        public AssignmentViewModel(AssignmentService assignmentService)
+        public AssignmentViewModel(AssignmentService assignmentService, CourseService courseService)
         {
             _assignmentService = assignmentService;
+            _courseService = courseService;
             LoadAssignmentsCommand = new AsyncRelayCommand(LoadAssignmentsAsync);
             AddAssignmentCommand = new AsyncRelayCommand(AddAssignmentAsync);
             UpdateAssignmentCommand = new AsyncRelayCommand(UpdateAssignmentAsync);
@@ -40,6 +45,10 @@ namespace MD3SQLite.ViewModels
         private async Task LoadAssignmentsAsync()
         {
             var assignments = await _assignmentService.GetAssignmentsAsync();
+            foreach (var assignment in assignments)
+            {
+                assignment.Course = await _courseService.GetCourseAsync(assignment.CourseId);
+            }
             // Bind the assignments to the view
             Assignments = new ObservableCollection<Assignment>(assignments);
         }

@@ -16,6 +16,8 @@ namespace MD3SQLite.ViewModels
     public partial class SubmissionViewModel : ObservableObject
     {
         private readonly SubmissionService _submissionService;
+        private readonly AssignmentService _assignmentService;
+        private readonly StudentService _studentService;
 
         [ObservableProperty]
         private ObservableCollection<Submission>? _submissions;
@@ -23,9 +25,12 @@ namespace MD3SQLite.ViewModels
         [ObservableProperty]
         private Submission? _selectedSubmission;
         //done: refresh student list after navigating to student page
-        public SubmissionViewModel(SubmissionService submissionsService)
+        public SubmissionViewModel(
+            SubmissionService submissionsService, AssignmentService assignmentService, StudentService studentService)
         {
             _submissionService = submissionsService;
+            _assignmentService = assignmentService;
+            _studentService = studentService;
             LoadSubmissionsCommand = new AsyncRelayCommand(LoadSubmissionsAsync);
             AddSubmissionCommand = new AsyncRelayCommand(AddSubmissionAsync);
             UpdateSubmissionCommand = new AsyncRelayCommand(UpdateSubmissionAsync);
@@ -42,6 +47,11 @@ namespace MD3SQLite.ViewModels
         private async Task LoadSubmissionsAsync()
         {
             var submissions = await _submissionService.GetSubmissionsAsync();
+            foreach (var submission in submissions)
+            {
+                submission.Assignment = await _assignmentService.GetAssignmentAsync(submission.AssignmentId);
+                submission.Student = await _studentService.GetStudentAsync(submission.StudentId);
+            }
             // Bind the submissions to the view
             Submissions = new ObservableCollection<Submission>(submissions);
         }

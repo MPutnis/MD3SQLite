@@ -13,8 +13,8 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding AssignmentId}" VerticalOptions="Center" />
-                            <Label Text="{Binding StudentId}" VerticalOptions="Center" Margin="10,0,0,0" />
+                            <Label Text="{Binding AssignmentName}" VerticalOptions="Center" />
+                            <Label Text="{Binding StudentIdNumber}" VerticalOptions="Center" Margin="10,0,0,0" />
                             <Label Text="{Binding SubmissionTime}" VerticalOptions="Center" Margin="10,0,0,0" />
                             <Label Text="{Binding Score}" VerticalOptions="Center" Margin="10,0,0,0" />
                         </StackLayout>
