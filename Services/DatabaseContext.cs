@@ -11,7 +11,7 @@ namespace MD3SQLite.Services
 {
     public class DatabaseContext
     {
-        private readonly SQLiteAsyncConnection? _database;
+        private readonly SQLiteAsyncConnection _database;
 
         // TODO: add try/ catch blocks to handle database interaction exceptions
         public DatabaseContext(string dbPath)
@@ -207,11 +207,11 @@ namespace MD3SQLite.Services
                 // Insert student test data
                 var testStudents = new List<Student>
                 {
-                    new Student("John", "Smith", Genders.Male, "js24042"),
-                    new Student("Jane", "Doe", Genders.Female, "jd24043"),
-                    new Student("Robert", "Graham", Genders.Male, "rg21012"),
-                    new Student("Ann", "Gale", Genders.Female, "ag23030"),
-                    new Student("Gaston", "Ganu", Genders.Other, "gg24031"),
+                    new("John", "Smith", Genders.Male, "js24042"),
+                    new("Jane", "Doe", Genders.Female, "jd24043"),
+                    new("Robert", "Graham", Genders.Male, "rg21012"),
+                    new("Ann", "Gale", Genders.Female, "ag23030"),
+                    new("Gaston", "Ganu", Genders.Other, "gg24031"),
                 };
 
                 foreach (var student in testStudents)
@@ -227,11 +227,11 @@ namespace MD3SQLite.Services
                 // Insert teacher test data
                 var testTeachers = new List<Teacher>
                 {
-                    new Teacher("Alice", "Johnson", Genders.Female, new DateTime(2020, 1, 15)),
-                    new Teacher("Bob", "Williams", Genders.Male, new DateTime(2019, 3, 22)),
-                    new Teacher("Catherine", "Brown", Genders.Female, new DateTime(2018, 5, 10)),
-                    new Teacher("David", "Jones", Genders.Male, new DateTime(2021, 7, 30)),
-                    new Teacher("Eva", "Miller", Genders.Female, new DateTime(2022, 9, 5)),
+                    new("Alice", "Johnson", Genders.Female, new DateTime(2020, 1, 15)),
+                    new("Bob", "Williams", Genders.Male, new DateTime(2019, 3, 22)),
+                    new("Catherine", "Brown", Genders.Female, new DateTime(2018, 5, 10)),
+                    new("David", "Jones", Genders.Male, new DateTime(2021, 7, 30)),
+                    new("Eva", "Miller", Genders.Female, new DateTime(2022, 9, 5)),
                 };
 
                 foreach (var teacher in testTeachers)
@@ -247,11 +247,11 @@ namespace MD3SQLite.Services
                 // Insert course test data
                 var testCourses = new List<Course>
                 {
-                    new Course("Mathematics", 1),
-                    new Course("English",2),
-                    new Course("Science",3),
-                    new Course("History",4),
-                    new Course("Art",5),
+                    new("Mathematics", 1),
+                    new("English",2),
+                    new("Science",3),
+                    new("History",4),
+                    new("Art",5),
                 };
                 foreach (var course in testCourses)
                 {
@@ -265,16 +265,16 @@ namespace MD3SQLite.Services
                 // Insert assignment test data
                 var testAssignments = new List<Assignment>
                 {
-                    new Assignment(new DateTime(2022, 1, 15), 1, "Mathematics Assignment 1"),
-                    new Assignment(new DateTime(2022, 2, 15), 2, "English Assignment 1"),
-                    new Assignment(new DateTime(2022, 3, 15), 3, "Science Assignment 1"),
-                    new Assignment(new DateTime(2022, 4, 15), 4, "History Assignment 1"),
-                    new Assignment(new DateTime(2022, 5, 15), 5, "Art Assignment 1"),
-                    new Assignment(new DateTime(2023, 1, 15), 1, "Mathematics Assignment 2"),
-                    new Assignment(new DateTime(2023, 2, 15), 2, "English Assignment 2"),
-                    new Assignment(new DateTime(2023, 3, 15), 3, "Science Assignment 2"),
-                    new Assignment(new DateTime(2023, 4, 15), 4, "History Assignment 2"),
-                    new Assignment(new DateTime(2023, 5, 15), 5, "Art Assignment 2"),
+                    new(new DateTime(2022, 1, 15), 1, "Mathematics Assignment 1"),
+                    new(new DateTime(2022, 2, 15), 2, "English Assignment 1"),
+                    new(new DateTime(2022, 3, 15), 3, "Science Assignment 1"),
+                    new(new DateTime(2022, 4, 15), 4, "History Assignment 1"),
+                    new(new DateTime(2022, 5, 15), 5, "Art Assignment 1"),
+                    new(new DateTime(2023, 1, 15), 1, "Mathematics Assignment 2"),
+                    new(new DateTime(2023, 2, 15), 2, "English Assignment 2"),
+                    new(new DateTime(2023, 3, 15), 3, "Science Assignment 2"),
+                    new(new DateTime(2023, 4, 15), 4, "History Assignment 2"),
+                    new(new DateTime(2023, 5, 15), 5, "Art Assignment 2"),
                 };
                 foreach (var assignment in testAssignments)
                 {
@@ -288,16 +288,16 @@ namespace MD3SQLite.Services
                 // Insert submission test data
                 var testSubmissions = new List<Submissions>
                 {
-                    new Submissions(57, new DateTime(2022, 1, 15), 1, 1),
-                    new Submissions(78, new DateTime(2022, 2, 15), 2, 2),
-                    new Submissions(89, new DateTime(2022, 3, 15), 3, 3),
-                    new Submissions(90, new DateTime(2022, 4, 15), 4, 4),
-                    new Submissions(100, new DateTime(2022, 5, 15), 5, 5),
-                    new Submissions(67, new DateTime(2023, 1, 15), 6, 1),
-                    new Submissions(88, new DateTime(2023, 2, 15), 7, 2),
-                    new Submissions(90, new DateTime(2023, 3, 15), 8, 3),
-                    new Submissions(95, new DateTime(2023, 4, 15), 9, 4),
-                    new Submissions(100, new DateTime(2023, 5, 15), 10, 5),
+                    new(57, new DateTime(2022, 1, 15), 1, 1),
+                    new(78, new DateTime(2022, 2, 15), 2, 2),
+                    new(89, new DateTime(2022, 3, 15), 3, 3),
+                    new(90, new DateTime(2022, 4, 15), 4, 4),
+                    new(100, new DateTime(2022, 5, 15), 5, 5),
+                    new(67, new DateTime(2023, 1, 15), 6, 1),
+                    new(88, new DateTime(2023, 2, 15), 7, 2),
+                    new(90, new DateTime(2023, 3, 15), 8, 3),
+                    new(95, new DateTime(2023, 4, 15), 9, 4),
+                    new(100, new DateTime(2023, 5, 15), 10, 5),
 
                 };
                 foreach (var submission in testSubmissions)

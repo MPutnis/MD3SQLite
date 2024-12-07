@@ -7,14 +7,9 @@ using MD3SQLite.Models;
 
 namespace MD3SQLite.Services
 {
-    public class SubmissionsService
+    public class SubmissionsService(DatabaseContext databaseContext)
     {
-        private readonly DatabaseContext _databaseContext;
-
-        public SubmissionsService(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all submissions
         public Task<List<Submissions>> GetSubmissionsAsync()

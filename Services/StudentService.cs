@@ -7,15 +7,10 @@ using MD3SQLite.Models;
 
 namespace MD3SQLite.Services
 {
-    public class StudentService
+    public class StudentService(DatabaseContext databaseContext)
     {
         
-        private readonly DatabaseContext _databaseContext;
-        
-        public StudentService(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all students
         public Task<List<Student>> GetStudentsAsync()

@@ -16,12 +16,12 @@ namespace MD3SQLite.ViewModels
         [ObservableProperty]
         private Student? _student;
 
-        public ObservableCollection<Genders> Genders { get; } = new ObservableCollection<Genders>
-        {
+        public ObservableCollection<Genders> Genders { get; } =
+        [
             Models.Genders.Male,
             Models.Genders.Female,
             Models.Genders.Other
-        };
+        ];
 
         public StudentDetailViewModel(StudentService studentService)
         {
@@ -42,7 +42,7 @@ namespace MD3SQLite.ViewModels
                 {
                     await _studentService.SaveStudentAsync(Student);
                     Debug.WriteLine($"Student saved: {Student.Name} {Student.Surname} {Student.StudentIdNumber}");
-                    await Shell.Current.GoToAsync("//MainPage/StudentPage"); // Go back to the previous page
+                    await Shell.Current.GoToAsync(".."); // Go back to the previous page
                 }
             }
             catch (Exception ex)
@@ -54,7 +54,7 @@ namespace MD3SQLite.ViewModels
         // Navigation from student details to student list
         private async Task NavigateBackAsync()
         {
-            await Shell.Current.GoToAsync("//MainPage/StudentPage");
+            await Shell.Current.GoToAsync("..");
         }
 
         public void Initialize(Student student)

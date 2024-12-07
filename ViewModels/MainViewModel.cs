@@ -13,7 +13,7 @@ namespace MD3SQLite.ViewModels
         private readonly DatabaseContext _databaseContext;
 
         [ObservableProperty]
-        private string _databaseStatistics;
+        private string _databaseStatistics = string.Empty;
         
         public MainViewModel(DatabaseContext databaseContext)
         {
@@ -30,13 +30,13 @@ namespace MD3SQLite.ViewModels
         }
 
         [RelayCommand]
-        private async Task NavigateToStudents()
+        private static async Task NavigateToStudents()
         {
             // Navigate to StudentPage
             if (Shell.Current != null)
             {
                 // Navigate to StudentPage
-                await Shell.Current.GoToAsync(nameof(StudentPage));
+                await Shell.Current.GoToAsync("///StudentPage");
             }
             else
             {
@@ -46,11 +46,11 @@ namespace MD3SQLite.ViewModels
         }
 
         [RelayCommand]
-        private async Task NavigateToTeachers()
+        private static async Task NavigateToTeachers()
         {
             // Navigate to TeacherPage
             if (Shell.Current != null)
-                await Shell.Current.GoToAsync(nameof(TeacherPage));
+                await Shell.Current.GoToAsync("///TeacherPage");
             else
                 Debug.WriteLine("Shell.Currrent is null");
         }
