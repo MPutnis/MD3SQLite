@@ -73,28 +73,33 @@ namespace MD3SQLite.ViewModels
         {
             if (SelectedStudent != null)
             { 
-                bool confirm = await Application.Current.MainPage.DisplayAlert(
-                    "Confirm Delete",
-                    $"Are you sure you want to delete {SelectedStudent.FullName}?",
-                    "Yes",
-                    "No"
-                    );
-
-                if (confirm)
+                var mainPage = Application.Current?.MainPage;
+                if (mainPage != null)
                 {
-                    try
-                    {
-                        await _studentService.DeleteStudentAsync(SelectedStudent);
-                        Debug.WriteLine($"Deleted student {SelectedStudent.FullName}");
-                        SelectedStudent = null;
-                        await LoadStudentsAsync();
-                    }
-                    catch (Exception ex)
-                    {
 
-                        Debug.WriteLine($"Error deleting student: {ex.Message}");
+                    bool confirm = await mainPage.DisplayAlert(
+                        "Confirm Delete",
+                        $"Are you sure you want to delete {SelectedStudent.FullName}?",
+                        "Yes",
+                        "No"
+                        );
+
+                    if (confirm)
+                    {
+                        try
+                        {
+                            await _studentService.DeleteStudentAsync(SelectedStudent);
+                            Debug.WriteLine($"Deleted student {SelectedStudent.FullName}");
+                            SelectedStudent = null;
+                            await LoadStudentsAsync();
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Debug.WriteLine($"Error deleting student: {ex.Message}");
+                        }
                     }
-                }  
+                }
             }
         }
     }

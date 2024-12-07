@@ -67,30 +67,31 @@ namespace MD3SQLite.ViewModels
         {
             if (SelectedTeacher != null)
             {
-                bool confirm = await App.Current.MainPage.DisplayAlert(
-                    "Delete Teacher",
-                    $"Are you sure you want to delete {SelectedTeacher.Name} {SelectedTeacher.Surname}?",
-                    "Yes",
-                    "No"
-                    );
-                if (confirm)
+                var mainPage = Application.Current?.MainPage;
+                if (mainPage != null)
                 {
-                    try
+                    bool confirm = await mainPage.DisplayAlert(
+                        "Delete Teacher",
+                        $"Are you sure you want to delete {SelectedTeacher.Name} {SelectedTeacher.Surname}?",
+                        "Yes",
+                        "No"
+                        );
+                    if (confirm)
                     {
-                        await _teacherService.DeleteTeacherAsync(SelectedTeacher);
-                        Debug.WriteLine($"Teacher deleted: {SelectedTeacher.Name} {SelectedTeacher.Surname}");
-                        SelectedTeacher = null;
-                        await LoadTeachersAsync();
+                        try
+                        {
+                            await _teacherService.DeleteTeacherAsync(SelectedTeacher);
+                            Debug.WriteLine($"Teacher deleted: {SelectedTeacher.Name} {SelectedTeacher.Surname}");
+                            SelectedTeacher = null;
+                            await LoadTeachersAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            Debug.WriteLine($"Error deleting teacher: {ex.Message}");
+                        }
                     }
-                    catch (Exception)
-                    {
-                        Debug.WriteLine($"Error deleting teacher: {SelectedTeacher.Name} {SelectedTeacher.Surname}");
-                    }
-                    
-                }
-                
+                }                
             }
-
         }
     }
 }

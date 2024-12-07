@@ -7,13 +7,15 @@ namespace MD3SQLite.Views
 	[QueryProperty(nameof(Teacher), "Teacher")]
 	public partial class TeacherDetailPage : ContentPage
 	{
-        private TeacherDetailViewModel _viewModel;
+        private readonly TeacherDetailViewModel _viewModel;
+        private Teacher _teacher;
         public TeacherDetailPage(TeacherDetailViewModel viewModel)
 		{
 			InitializeComponent();
             BindingContext = _viewModel = viewModel;
+            _teacher = new Teacher();
         }
-        private Teacher _teacher;
+        
         public Teacher Teacher
         {
             get => _teacher;

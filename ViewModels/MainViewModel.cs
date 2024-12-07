@@ -36,7 +36,7 @@ namespace MD3SQLite.ViewModels
             if (Shell.Current != null)
             {
                 // Navigate to StudentPage
-                await Shell.Current.GoToAsync("///StudentPage");
+                await Shell.Current.GoToAsync("//StudentPage");
             }
             else
             {
@@ -50,7 +50,7 @@ namespace MD3SQLite.ViewModels
         {
             // Navigate to TeacherPage
             if (Shell.Current != null)
-                await Shell.Current.GoToAsync("///TeacherPage");
+                await Shell.Current.GoToAsync("//TeacherPage");
             else
                 Debug.WriteLine("Shell.Currrent is null");
         }
