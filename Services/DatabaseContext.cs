@@ -20,12 +20,15 @@ namespace MD3SQLite.Services
             // Create the database, if it doesn't already exist
             _database = new SQLiteAsyncConnection(dbPath);
 
+            // Enable foreign key constraints
+            _database.ExecuteAsync("PRAGMA foreign_keys = ON;");
+
             // Create the tables
             _database.CreateTableAsync<Student>().Wait();
             _database.CreateTableAsync<Teacher>().Wait();
             _database.CreateTableAsync<Course>().Wait();
             _database.CreateTableAsync<Assignment>().Wait();
-            _database.CreateTableAsync<Submissions>().Wait();
+            _database.CreateTableAsync<Submission>().Wait();
              
         }
         // task to create table, used when clearing data
@@ -45,14 +48,14 @@ namespace MD3SQLite.Services
         public Task<Student> GetStudentAsync(int id)
         { 
             return _database.Table<Student>()
-                .Where(i => i.id == id)
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
 
         // Save a student
         public Task<int> SaveStudentAsync(Student student)
         {
-            if (student.id != 0)
+            if (student.Id != 0)
             {
                 return _database.UpdateAsync(student);
             }
@@ -80,14 +83,14 @@ namespace MD3SQLite.Services
         public Task<Teacher> GetTeacherAsync(int id)
         {
             return _database.Table<Teacher>()
-                .Where(i => i.id == id)
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
 
         // Save a teacher
         public Task<int> SaveTeacherAsync(Teacher teacher)
         {
-            if (teacher.id != 0)
+            if (teacher.Id != 0)
             {
                 return _database.UpdateAsync(teacher);
             }
@@ -114,13 +117,13 @@ namespace MD3SQLite.Services
         public Task<Course> GetCourseAsync(int id)
         {
             return _database.Table<Course>()
-                .Where(i => i.id == id)
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
         // Save a course
         public Task<int> SaveCourseAsync(Course course)
         {
-            if (course.id != 0)
+            if (course.Id != 0)
             {
                 return _database.UpdateAsync(course);
             }
@@ -145,13 +148,13 @@ namespace MD3SQLite.Services
         public Task<Assignment> GetAssignmentAsync(int id)
         {
             return _database.Table<Assignment>()
-                .Where(i => i.id == id)
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
         // Save an assignment
         public Task<int> SaveAssignmentAsync(Assignment assignment)
         {
-            if (assignment.id != 0)
+            if (assignment.Id != 0)
             {
                 return _database.UpdateAsync(assignment);
             }
@@ -168,21 +171,21 @@ namespace MD3SQLite.Services
         // SUBMISSIONS CRUD OPERATIONS
 
         // Get all submissions
-        public Task<List<Submissions>> GetSubmissionsAsync()
+        public Task<List<Submission>> GetSubmissionsAsync()
         {
-            return _database.Table<Submissions>().ToListAsync();
+            return _database.Table<Submission>().ToListAsync();
         }
         // Get a specific submission
-        public Task<Submissions> GetSubmissionAsync(int id)
+        public Task<Submission> GetSubmissionAsync(int id)
         {
-            return _database.Table<Submissions>()
-                .Where(i => i.id == id)
+            return _database.Table<Submission>()
+                .Where(i => i.Id == id)
                 .FirstOrDefaultAsync();
         }
         // Save a submission
-        public Task<int> SaveSubmissionAsync(Submissions submission)
+        public Task<int> SaveSubmissionAsync(Submission submission)
         {
-            if (submission.id != 0)
+            if (submission.Id != 0)
             {
                 return _database.UpdateAsync(submission);
             }
@@ -192,7 +195,7 @@ namespace MD3SQLite.Services
             }
         }
         // Delete a submission
-        public Task<int> DeleteSubmissionAsync(Submissions submission)
+        public Task<int> DeleteSubmissionAsync(Submission submission)
         {
             return _database.DeleteAsync(submission);
         }
@@ -286,7 +289,7 @@ namespace MD3SQLite.Services
             if (submissions.Count == 0)
             {
                 // Insert submission test data
-                var testSubmissions = new List<Submissions>
+                var testSubmissions = new List<Submission>
                 {
                     new(57, new DateTime(2022, 1, 15), 1, 1),
                     new(78, new DateTime(2022, 2, 15), 2, 2),
@@ -314,7 +317,7 @@ namespace MD3SQLite.Services
             try
             {
                 // Drop the child tables
-                 await _database.DeleteAllAsync<Submissions>();
+                 await _database.DeleteAllAsync<Submission>();
                  await _database.DeleteAllAsync<Assignment>();
                  await _database.DeleteAllAsync<Course>();
 
@@ -338,7 +341,7 @@ namespace MD3SQLite.Services
                 // Recreate the child tables
                 await _database.CreateTableAsync<Course>();
                 await _database.CreateTableAsync<Assignment>();
-                await _database.CreateTableAsync<Submissions>();
+                await _database.CreateTableAsync<Submission>();
             }
             catch (Exception ex)
             {
@@ -370,7 +373,7 @@ namespace MD3SQLite.Services
             sb.AppendLine($"Assignments: {assignmentCount}");
 
             // Get the number of submissions
-             var submissionCount = await _database.Table<Submissions>().CountAsync();
+             var submissionCount = await _database.Table<Submission>().CountAsync();
             sb.AppendLine($"Submissions: {submissionCount}");
 
             return sb.ToString();

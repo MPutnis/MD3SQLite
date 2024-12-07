@@ -9,7 +9,7 @@ namespace MD3SQLite.Models
     public class Student : Person
     {
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [SQLite.NotNull, SQLite.Unique]
         public string? StudentIdNumber { get; set; }

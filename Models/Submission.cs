@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace MD3SQLite.Models
 {
-    public class Submissions
+    public class Submission
     {
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
-        public int id { get; set; }
+        public int Id { get; set; }
         [SQLite.NotNull]
         public int AssignmentId { get; set; }
         [SQLite.NotNull]
         public int StudentId { get; set; }
         public DateTime? SubmissionTime { get; set; }
         public int? Score { get; set; }
-        public Submissions(int score, DateTime submissionTime, int assignmentId, int studentId)
+        public Submission(int score, DateTime submissionTime, int assignmentId, int studentId)
         {
             Score = score;
             SubmissionTime = submissionTime;
             AssignmentId = assignmentId;
             StudentId = studentId;
         }
-        public Submissions() { }
+        public Submission() { }
     }
 }

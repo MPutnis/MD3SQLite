@@ -7,29 +7,29 @@ using MD3SQLite.Models;
 
 namespace MD3SQLite.Services
 {
-    public class SubmissionsService(DatabaseContext databaseContext)
+    public class SubmissionService(DatabaseContext databaseContext)
     {
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all submissions
-        public Task<List<Submissions>> GetSubmissionsAsync()
+        public Task<List<Submission>> GetSubmissionsAsync()
         {
             return _databaseContext.GetSubmissionsAsync();
         }
 
         // Get a submission by ID
-        public Task<Submissions> GetSubmissionAsync(int id)
+        public Task<Submission> GetSubmissionAsync(int id)
         {
             return _databaseContext.GetSubmissionAsync(id);
         }
 
         // Save a submission
-        public Task<int> SaveSubmissionAsync(Submissions submission)
+        public Task<int> SaveSubmissionAsync(Submission submission)
         {
             return _databaseContext.SaveSubmissionAsync(submission);
         }
         // Delete a submission
-        public Task DeleteSubmissionAsync(Submissions submission)
+        public Task DeleteSubmissionAsync(Submission submission)
         {
             return _databaseContext.DeleteSubmissionAsync(submission);
         }

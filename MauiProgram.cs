@@ -44,6 +44,27 @@ namespace MD3SQLite
             builder.Services.AddSingleton<TeacherPage>();
             builder.Services.AddSingleton<TeacherDetailPage>();
             builder.Services.AddSingleton<TeacherDetailViewModel>();
+
+            // Course registrations
+            builder.Services.AddSingleton<CourseService>();
+            builder.Services.AddSingleton<CourseViewModel>();
+            builder.Services.AddSingleton<CoursePage>();
+            builder.Services.AddSingleton<CourseDetailPage>();
+            builder.Services.AddSingleton<CourseDetailViewModel>();
+
+            // Assignment registrations
+            builder.Services.AddSingleton<AssignmentService>();
+            builder.Services.AddSingleton<AssignmentViewModel>();
+            builder.Services.AddSingleton<AssignmentPage>();
+            builder.Services.AddSingleton<AssignmentDetailPage>();
+            builder.Services.AddSingleton<AssignmentDetailViewModel>();
+
+            // Submissions registrations
+            builder.Services.AddSingleton<SubmissionService>();
+            builder.Services.AddSingleton<SubmissionViewModel>();
+            builder.Services.AddSingleton<SubmissionPage>();
+            builder.Services.AddSingleton<SubmissionsDetailPage>();
+            builder.Services.AddSingleton<SubmissionDetailViewModel>();
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

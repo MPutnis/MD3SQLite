@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MD3SQLite.ViewModels"
+             x:Class="MD3SQLite.Views.AssignmentPage"
+             Title="AssignmentPage">
+    <StackLayout>
+        <Label Text="Assignment Page" FontSize="Title" />
+        <Button Text="Add New Assignment" Command="{Binding AddAssignmentCommand}" />
+        <ListView ItemsSource="{Binding Assignments}"
+                  SelectedItem="{Binding SelectedAssignment}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="{Binding CourseId}" VerticalOptions="Center" />
+                            <Label Text="{Binding Description}" VerticalOptions="Center" Margin="10,0,0,0" />
+                            <Label Text="{Binding DeadLine}" VerticalOptions="Center" Margin="10,0,0,0" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Button Text="Update" Command="{Binding UpdateAssignmentCommand}" />
+        <Button Text="Delete" Command="{Binding DeleteAssignmentCommand}" />
+    </StackLayout>
+</ContentPage>

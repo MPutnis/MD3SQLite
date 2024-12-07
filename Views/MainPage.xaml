@@ -11,8 +11,10 @@
 
         <Button Text="Go to Students" Command="{Binding NavigateToStudentsCommand}" />
         <Button Text="Go to Teachers" Command="{Binding NavigateToTeachersCommand}" />
-        <!-- Add more buttons for other pages -->
-
+        <Button Text="Go to Courses" Command="{Binding NavigateToCoursesCommand}" />
+        <Button Text="Go to Assignments" Command="{Binding NavigateToAssignmentsCommand}" />
+        <Button Text="Go to Submissions" Command="{Binding NavigateToSubmissionsCommand}" />
+        
         <Button Text="Seed Database" Command="{Binding SeedDatabaseCommand}" />
         <Button Text="Clear Database" Command="{Binding ClearDatabaseCommand}" />
     </StackLayout>

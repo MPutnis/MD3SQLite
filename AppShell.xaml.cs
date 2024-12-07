@@ -9,27 +9,6 @@ namespace MD3SQLite
         {
             InitializeComponent();
 
-            //try
-            //{
-            //    // Registering the routes
-            //    Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
-            //    Debug.WriteLine("MainPage route registered successfully.");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine($"Error registering MainPage route: {ex.Message}");
-            //}
-
-            //try
-            //{
-            //    Routing.RegisterRoute(nameof(StudentPage), typeof(StudentPage));
-            //    Debug.WriteLine("StudentPage route registered successfully.");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine($"Error registering StudentPage route: {ex.Message}");
-            //}
-
             try
             {
                 Routing.RegisterRoute(nameof(StudentDetailPage), typeof(StudentDetailPage));
@@ -39,17 +18,7 @@ namespace MD3SQLite
             {
                 Debug.WriteLine($"Error registering StudentDetailPage route: {ex.Message}");
             }
-
-            //try
-            //{
-            //    Routing.RegisterRoute(nameof(TeacherPage), typeof(TeacherPage));
-            //    Debug.WriteLine("TeacherPage route registered successfully.");
-            //}
-            //catch (Exception ex)
-            //{
-            //    Debug.WriteLine($"Error registering TeacherPage route: {ex.Message}");
-            //}
-
+                        
             try
             {
                 Routing.RegisterRoute(nameof(TeacherDetailPage), typeof(TeacherDetailPage));
@@ -58,6 +27,39 @@ namespace MD3SQLite
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error registering TeacherDetailPage route: {ex.Message}");
+            }
+
+            try
+            {
+                Routing.RegisterRoute(nameof(CourseDetailPage), typeof(CourseDetailPage));
+                Debug.WriteLine("CourseDetailPage route registered successfully.");
+            }
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine($"Error registering CourseDetailPage route: {ex.Message}");
+            }
+
+            try
+            {
+                Routing.RegisterRoute(nameof(AssignmentDetailPage), typeof(AssignmentDetailPage));
+                Debug.WriteLine("AssignmentDetailPage route registered successfully.");
+            }
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine($"Error registering AssignmentDetailPage route: {ex.Message}");
+            }
+
+            try
+            {
+                Routing.RegisterRoute(nameof(SubmissionsDetailPage), typeof(SubmissionsDetailPage));
+                Debug.WriteLine("SubmissionsDetailPage route registered successfully.");
+            }
+            catch (Exception ex)
+            {
+
+                Debug.WriteLine($"Error registering SubmissionsDetailPage route: {ex.Message}");
             }
         }
     }

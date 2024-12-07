@@ -29,7 +29,7 @@ namespace MD3SQLite
             });
         }
 
-        private async Task InitializeDatabaseAndSetMainPageAsync()
+        private static async Task InitializeDatabaseAndSetMainPageAsync()
         {
             try
             {
@@ -38,6 +38,10 @@ namespace MD3SQLite
 
                 // Ensure tables are created
                 await databaseContext.CreateTableAsync<Student>();
+                await databaseContext.CreateTableAsync<Teacher>();
+                await databaseContext.CreateTableAsync<Course>();
+                await databaseContext.CreateTableAsync<Assignment>();
+                await databaseContext.CreateTableAsync<Submission>();  
 
                 // Create the MainViewModel
                 //var mainViewModel = new MainViewModel(databaseContext);

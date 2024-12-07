@@ -23,4 +23,20 @@
         ContentTemplate="{DataTemplate Views:TeacherPage}" 
         Route="TeacherPage"/>
 
+    <ShellContent
+        Title="Course Page"
+        ContentTemplate="{DataTemplate Views:CoursePage}"
+        Route="CoursePage"/>
+
+    <ShellContent
+        Title="Assignment Page"
+        ContentTemplate="{DataTemplate Views:AssignmentPage}" 
+        Route="AssignmentPage"/>
+
+    <ShellContent
+        Title="Submissions Page"
+        ContentTemplate="{DataTemplate Views:SubmissionPage}" 
+        Route="SubmissionsPage"/>
+
+
 </Shell>

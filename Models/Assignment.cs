@@ -9,7 +9,7 @@ namespace MD3SQLite.Models
     public class Assignment
     {
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
-        public int id { get; set; }
+        public int Id { get; set; }
         [SQLite.NotNull]
         public DateTime? DeadLine { get; set; }
         [SQLite.NotNull]

@@ -7,13 +7,10 @@ using MD3SQLite.Models;
 
 namespace MD3SQLite.Services
 {
-    public class AssignmentService
+    public class AssignmentService(DatabaseContext databaseContext)
     {
-        private readonly DatabaseContext _databaseContext;
-        public AssignmentService(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        private readonly DatabaseContext _databaseContext = databaseContext;
+        
         // Get all assignments
         public Task<List<Assignment>> GetAssignmentsAsync()
         {

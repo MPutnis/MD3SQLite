@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MD3SQLite.ViewModels"
+             x:Class="MD3SQLite.Views.CourseDetailPage"
+             Title="Course Details">
+    <StackLayout Padding="10">
+        <Label Text="Course Name" />
+        <Entry Text="{Binding Course.Name}" />
+        <Label Text="Teacher ID" />
+        <Entry Text="{Binding Course.TeacherId}" />
+        <Button Text="Save" Command="{Binding SaveCommand}" />
+        <Button Text="Back" Command="{Binding NavigateBackCommand}" />
+    </StackLayout>
+</ContentPage>

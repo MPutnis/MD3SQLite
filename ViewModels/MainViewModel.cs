@@ -56,6 +56,36 @@ namespace MD3SQLite.ViewModels
         }
 
         [RelayCommand]
+        private static async Task NavigateToCourses()
+        {
+            // Navigate to CoursePage
+            if (Shell.Current != null)
+                await Shell.Current.GoToAsync("//CoursePage");
+            else
+                Debug.WriteLine("Shell.Current is null");
+        }
+
+        [RelayCommand]
+        private static async Task NavigateToAssignments()
+        {
+            // Navigate to AssignmentPage
+            if (Shell.Current != null)
+                await Shell.Current.GoToAsync("//AssignmentPage");
+            else
+                Debug.WriteLine("Shell.Current is null");
+        }
+
+        [RelayCommand]
+        private static async Task NavigateToSubmissions()
+        {
+            // Navigate to SubmissionsPage
+            if (Shell.Current != null)
+                await Shell.Current.GoToAsync("//SubmissionsPage");
+            else
+                Debug.WriteLine("Shell.Current is null");
+        }
+
+        [RelayCommand]
         private async Task SeedDatabase()
         {
             // Seed the database

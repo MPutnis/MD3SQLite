@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MD3SQLite.ViewModels"
+             x:Class="MD3SQLite.Views.SubmissionsDetailPage"
+             Title="SubmissionsDetailPage">
+    <StackLayout Padding="10">
+        <Label Text="Assignment Description" />
+        <Entry Text="{Binding Submission.AssignmentId}" />
+
+        <Label Text="Student ID" />
+        <Entry Text="{Binding Submission.StudentId}" />
+
+        <Label Text="Submission Time" />
+        <DatePicker Date="{Binding Submission.SubmissionTime}" />
+
+        <Label Text="Score" />
+        <Entry Text="{Binding Submission.Score}" />
+
+        <Button Text="Save" Command="{Binding SaveCommand}" />
+        <Button Text="Back" Command="{Binding NavigateBackCommand}" />
+    </StackLayout>
+</ContentPage>

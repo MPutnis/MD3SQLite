@@ -72,6 +72,9 @@
 	  <Compile Update="Views\StudentPage.xaml.cs">
 	    <DependentUpon>StudentPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\SubmissionPage.xaml.cs">
+	    <DependentUpon>SubmissionPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -96,7 +99,7 @@
 	  <MauiXaml Update="Views\SubmissionsDetailPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="Views\SubmissionsPage.xaml">
+	  <MauiXaml Update="Views\SubmissionPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\TeacherDetailPage.xaml">

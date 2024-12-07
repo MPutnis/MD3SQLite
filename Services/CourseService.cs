@@ -7,14 +7,9 @@ using MD3SQLite.Models;
 
 namespace MD3SQLite.Services
 {
-    public class CourseService
+    public class CourseService(DatabaseContext databaseContext)
     {
-        private readonly DatabaseContext _databaseContext;
-
-        public CourseService(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all courses
         public Task<List<Course>> GetCoursesAsync()
