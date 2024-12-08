@@ -168,6 +168,14 @@ namespace MD3SQLite.Services
         {
             return _database.DeleteAsync(assignment);
         }
+
+        // Get assignments by course ID
+        public Task<List<Assignment>> GetAssignmentsByCourseIdAsync(int courseId)
+        {
+            return _database.Table<Assignment>()
+                .Where(i => i.CourseId == courseId)
+                .ToListAsync();
+        }
         // SUBMISSIONS CRUD OPERATIONS
 
         // Get all submissions
@@ -324,7 +332,7 @@ namespace MD3SQLite.Services
         // Clear all data
         public async Task ClearDataAsync()
         {
-            // TODO: Unhandled exception after dropping tables
+            // Done: Unhandled exception after dropping tables
 
             try
             {

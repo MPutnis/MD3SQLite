@@ -7,17 +7,35 @@
     <StackLayout>
         <Label Text="Submissions" FontSize="Large" />
         <Button Text="Add Submission" Command="{Binding AddSubmissionCommand}" />
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Assignment Name" FontAttributes="Bold" Grid.Column="0" />
+            <Label Text="Student Name" FontAttributes="Bold" Grid.Column="1" Margin="10,0,0,0" />
+            <Label Text="Submission Time" FontAttributes="Bold" Grid.Column="2" Margin="10,0,0,0" />
+            <Label Text="Score" FontAttributes="Bold" Grid.Column="3" Margin="10,0,0,0" />
+        </Grid>
         <ListView ItemsSource="{Binding Submissions}"
                   SelectedItem="{Binding SelectedSubmission}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding AssignmentName}" VerticalOptions="Center" />
-                            <Label Text="{Binding StudentIdNumber}" VerticalOptions="Center" Margin="10,0,0,0" />
-                            <Label Text="{Binding SubmissionTime}" VerticalOptions="Center" Margin="10,0,0,0" />
-                            <Label Text="{Binding Score}" VerticalOptions="Center" Margin="10,0,0,0" />
-                        </StackLayout>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding AssignmentName}" VerticalOptions="Center" Grid.Column="0" />
+                            <Label Text="{Binding StudentNameId}" VerticalOptions="Center" Grid.Column="1" Margin="10,0,0,0" />
+                            <Label Text="{Binding SubmissionTime}" VerticalOptions="Center" Grid.Column="2" Margin="10,0,0,0" />
+                            <Label Text="{Binding Score}" VerticalOptions="Center" Grid.Column="3" Margin="10,0,0,0" />
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

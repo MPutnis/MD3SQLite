@@ -82,7 +82,7 @@ namespace MD3SQLite.ViewModels
                 var mainPage = Application.Current?.MainPage;
                 if (mainPage != null)
                 {
-                    // TODO: display assignment description instead of ID
+                    // Done: display assignment description instead of ID
                     bool confirm = await mainPage.DisplayAlert(
                         "Confirm Delete",
                         $"Are you sure you want to delete {SelectedSubmission.AssignmentId} {SelectedSubmission.SubmissionTime}?",

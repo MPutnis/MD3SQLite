@@ -24,5 +24,10 @@ namespace MD3SQLite.Views
                 _viewModel.Initialize(_assignment);
             }
         }
-	}
+        // TODO: set default date for DeadLine
+        private void DatePicker_DateSelected(object sender, DateChangedEventArgs e)
+        {
+
+        }
+    }
 }

@@ -35,5 +35,5 @@ public partial class CoursePage : ContentPage
         }
     }
 
-    // TODO: Display teacher name instead of teacher id
+    // Done: Display teacher name instead of teacher id
 }

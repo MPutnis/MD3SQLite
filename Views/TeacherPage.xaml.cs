@@ -10,7 +10,7 @@ public partial class TeacherPage : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
     }
-    // TODO: forrmat ContractDate to not show time part
+    // Done: forrmat ContractDate to not show time part
     // refresh teacher list when navigating to Teacher page
     protected override void OnAppearing()
     {

@@ -8,12 +8,20 @@
         <Label Text="Assignment Description" />
         <Entry Text="{Binding Assignment.Description}" />
         
-        <Label Text="Course ID" />
-        <Entry Text="{Binding Assignment.CourseId}" />
-        
+        <Label Text="Course" />
+        <Picker ItemsSource="{Binding Courses}"
+                ItemDisplayBinding="{Binding Name}"
+                SelectedItem="{Binding SelectedCourse}" />
+
+
         <Label Text="Due Date" />
-        <DatePicker Date="{Binding Assignment.DeadLine}" />
-        
+        <DatePicker Date="{Binding DeadLineDate, Mode=TwoWay}"
+                    DateSelected="DatePicker_DateSelected" />
+
+        <Label Text="Due Time" />
+        <TimePicker Time="{Binding DeadLineTime, Mode=TwoWay}" />
+
+
         <Button Text="Save" Command="{Binding SaveCommand}" />
         <Button Text="Back" Command="{Binding NavigateBackCommand}" />
     </StackLayout>

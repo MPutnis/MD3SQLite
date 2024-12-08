@@ -8,15 +8,27 @@
     <StackLayout>
         <Label Text="Course Page" FontSize="Title" />
         <Button Text="Add New Course" Command="{Binding AddCourseCommand}" />
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Course Name" FontAttributes="Bold" Grid.Column="0" />
+            <Label Text="Teacher Name" FontAttributes="Bold" Grid.Column="1" Margin="10,0,0,0" />
+        </Grid>
         <ListView ItemsSource="{Binding Courses}"
                   SelectedItem="{Binding SelectedCourse}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding Name}" VerticalOptions="Center" />
-                            <Label Text="{Binding TeacherFullName}" VerticalOptions="Center" Margin="10,0,0,0" />
-                        </StackLayout>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" Grid.Column="0" />
+                            <Label Text="{Binding TeacherFullName}" VerticalOptions="Center" Grid.Column="1" Margin="10,0,0,0" />
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

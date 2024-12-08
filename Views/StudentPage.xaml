@@ -8,17 +8,35 @@
     <StackLayout>
         <Label Text="Student List" FontSize="Large" />
         <Button Text="Add New Student" Command="{Binding AddStudentCommand}" />
+        
+        <!-- Table Header -->
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Student Name" FontAttributes="Bold" Grid.Column="0" />
+            <Label Text="Student ID" FontAttributes="Bold" Grid.Column="1"  Margin="10"/>
+            <Label Text="Gender" FontAttributes="Bold" Grid.Column="2" Margin="10" />
+        </Grid>
+
         <ListView ItemsSource="{Binding Students}"
                   SelectedItem="{Binding SelectedStudent}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding FullName}" VerticalOptions="Center" />
-                            <Label Text="{Binding StudentIdNumber}" VerticalOptions="Center" Margin="10,0,0,0" />
-                            
-                            
-                        </StackLayout>
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding FullName}" VerticalOptions="Center" Grid.Column="0" />
+                            <Label Text="{Binding StudentIdNumber}" VerticalOptions="Center" Grid.Column="1" Margin="10,0,0,0" />
+                            <Label Text="{Binding Gender}" VerticalOptions="Center" Grid.Column="2" Margin="10,0,0,0" />
+                        </Grid>
+
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

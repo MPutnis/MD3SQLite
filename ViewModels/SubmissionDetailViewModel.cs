@@ -11,24 +11,71 @@ namespace MD3SQLite.ViewModels
     public partial class SubmissionDetailViewModel : ObservableObject
     {
         private readonly SubmissionService _submissionService;
+        private readonly AssignmentService _assignmentService;
+        private readonly StudentService _studentService;
+
         [ObservableProperty]
         private Submission? _submission;
-        public SubmissionDetailViewModel(SubmissionService submissionService)
+
+        [ObservableProperty]
+        private ObservableCollection<Assignment>? _assignments;
+
+        [ObservableProperty]
+        private Assignment? _selectedAssignment;
+
+        [ObservableProperty]
+        private ObservableCollection<Student>? _students;
+
+        [ObservableProperty]
+        private Student? _selectedStudent;
+
+        [ObservableProperty]
+        private DateTime _submissionDate;
+
+        [ObservableProperty]
+        private TimeSpan _submissionTime;
+
+        public SubmissionDetailViewModel(
+            SubmissionService submissionService, AssignmentService assignmentService, StudentService studentService)
         {
             _submissionService = submissionService;
+            _assignmentService = assignmentService;
+            _studentService = studentService;
             SaveCommand = new AsyncRelayCommand(SaveSubmissionAsync);
             NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
+            LoadAssignmentsCommand = new AsyncRelayCommand(LoadAssignmentsAsync);
+            LoadStudentsCommand = new AsyncRelayCommand(LoadStudentsAsync);
+            LoadAssignmentsCommand.Execute(null);
+            LoadStudentsCommand.Execute(null);
         }
         public IAsyncRelayCommand SaveCommand { get; }
         public IAsyncRelayCommand NavigateBackCommand { get; }
+        public IAsyncRelayCommand LoadAssignmentsCommand { get; }
+        public IAsyncRelayCommand LoadStudentsCommand { get; }
+
+        // Combine picked date and time into a single property
+        public DateTime SubmissionDateTime
+        {
+            get => SubmissionDate.Date + SubmissionTime;
+            set
+            {
+                SubmissionDate = value.Date;
+                SubmissionTime = value.TimeOfDay;
+            }
+        }
+
         private async Task SaveSubmissionAsync()
         {
             try
             {
-                if (Submission != null)
+                if (Submission != null && SelectedAssignment != null && SelectedStudent != null)
                 {
+                    Submission.AssignmentId = SelectedAssignment.Id;
+                    Submission.StudentId = SelectedStudent.Id;
+                    Submission.SubmissionTime = SubmissionDateTime;
                     await _submissionService.SaveSubmissionAsync((Submission)Submission);
-                    Debug.WriteLine($"Submission saved: {Submission.Score} {Submission.SubmissionTime} {Submission.AssignmentId} {Submission.StudentId}");
+                    Debug.WriteLine($"Submission saved: " +
+                        $"{Submission.Score} {Submission.SubmissionTime} {SelectedAssignment.Description} {SelectedStudent.FullName}");
                     await Shell.Current.GoToAsync(".."); // Go back to the previous page
                 }
             }
@@ -42,9 +89,26 @@ namespace MD3SQLite.ViewModels
         {
             await Shell.Current.GoToAsync("..");
         }
-        public void Initialize(Submission submission)
+
+        private async Task LoadAssignmentsAsync()
+        {
+            var assignments = await _assignmentService.GetAssignmentsAsync();
+            Assignments = new ObservableCollection<Assignment>(assignments);
+        }
+
+        private async Task LoadStudentsAsync()
+        {
+            var students = await _studentService.GetStudentsAsync();
+            Students = new ObservableCollection<Student>(students);
+        }
+        public async void Initialize(Submission submission)
         {
             Submission = submission;
+            SubmissionDateTime = submission.SubmissionTime ?? DateTime.Now; // Initialize SubmissionDate and SubmissionTime
+            await LoadAssignmentsAsync();
+            await LoadStudentsAsync();
+            SelectedAssignment = Assignments?.FirstOrDefault(a => a.Id == submission.AssignmentId);
+            SelectedStudent = Students?.FirstOrDefault(s => s.Id == submission.StudentId);
         }
     }
 }

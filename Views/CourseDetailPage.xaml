@@ -14,5 +14,19 @@
         
         <Button Text="Save" Command="{Binding SaveCommand}" />
         <Button Text="Back" Command="{Binding NavigateBackCommand}" />
+
+        <Label Text="Course Assignments" />
+        <ListView ItemsSource="{Binding Assignments}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal" Padding="10">
+                            <Label Text="{Binding Description}" VerticalOptions="Center" />
+                            <Label Text="{Binding DeadLine}" VerticalOptions="Center" Margin="10,0,0,0" />
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>

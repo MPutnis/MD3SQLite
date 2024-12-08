@@ -13,6 +13,7 @@ namespace MD3SQLite.ViewModels
     {
         private readonly CourseService _courseService;
         private readonly TeacherService _teacherService;
+        private readonly AssignmentService _assignmentService;
 
         [ObservableProperty]
         private Course? _course;
@@ -23,19 +24,26 @@ namespace MD3SQLite.ViewModels
         [ObservableProperty]
         private Teacher? _selectedTeacher;
 
-        public CourseDetailViewModel(CourseService courseService, TeacherService teacherService)
+        [ObservableProperty]
+        private ObservableCollection<Assignment>? _assignments;
+
+        public CourseDetailViewModel(
+            CourseService courseService, TeacherService teacherService, AssignmentService assignmentService)
         {
             _courseService = courseService;
             _teacherService = teacherService;
+            _assignmentService = assignmentService;
             SaveCommand = new AsyncRelayCommand(SaveCourseAsync);
             NavigateBackCommand = new AsyncRelayCommand(NavigateBackAsync);
             LoadTeachersCommand = new AsyncRelayCommand(LoadTeachersAsync);
+            LoadAssignmentsCommand = new AsyncRelayCommand(LoadAssignmentsAsync);
             LoadTeachersCommand.Execute(null);
         }
 
         public IAsyncRelayCommand SaveCommand { get; }
         public IAsyncRelayCommand NavigateBackCommand { get; }
         public IAsyncRelayCommand LoadTeachersCommand { get; }
+        public IAsyncRelayCommand LoadAssignmentsCommand { get; }
 
         private async Task SaveCourseAsync()
         {
@@ -61,17 +69,27 @@ namespace MD3SQLite.ViewModels
             await Shell.Current.GoToAsync("..");
         }
 
-
         private async Task LoadTeachersAsync()
         {
             var teachers = await _teacherService.GetTeachersAsync();
             Teachers = new ObservableCollection<Teacher>(teachers);
         }
+
+        private async Task LoadAssignmentsAsync()
+        {
+            if (Course != null)
+            {
+                var assignments = await _assignmentService.GetAssignmentsByCourseIdAsync(Course.Id);
+                Assignments = new ObservableCollection<Assignment>(assignments);
+            }
+        }
+
         public async void Initialize(Course course)
         {
             Course = course;
             await LoadTeachersAsync();
             SelectedTeacher = Teachers?.FirstOrDefault(t => t.Id == course.TeacherId);
+            await LoadAssignmentsAsync();
         }
     }
 }

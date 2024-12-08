@@ -6,13 +6,20 @@
              Title="SubmissionsDetailPage">
     <StackLayout Padding="10">
         <Label Text="Assignment Description" />
-        <Entry Text="{Binding Submission.AssignmentId}" />
+        <Picker ItemsSource="{Binding Assignments}"
+                ItemDisplayBinding="{Binding Description}"
+                SelectedItem="{Binding SelectedAssignment}" />
 
-        <Label Text="Student ID" />
-        <Entry Text="{Binding Submission.StudentId}" />
+        <Label Text="Student" />
+        <Picker ItemsSource="{Binding Students}"
+                ItemDisplayBinding="{Binding FullName}"
+                SelectedItem="{Binding SelectedStudent}" />
 
+        <Label Text="Submission Date" />
+        <DatePicker Date="{Binding SubmissionDate, Mode=TwoWay}" />
+        
         <Label Text="Submission Time" />
-        <DatePicker Date="{Binding Submission.SubmissionTime}" />
+        <TimePicker Time="{Binding SubmissionTime, Mode=TwoWay}" />
 
         <Label Text="Score" />
         <Entry Text="{Binding Submission.Score}" />

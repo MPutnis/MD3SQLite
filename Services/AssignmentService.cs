@@ -31,5 +31,11 @@ namespace MD3SQLite.Services
         {
             return _databaseContext.DeleteAssignmentAsync(assignment);
         }
+
+        // Get assignments by course ID
+        public Task<List<Assignment>> GetAssignmentsByCourseIdAsync(int courseId)
+        {
+            return _databaseContext.GetAssignmentsByCourseIdAsync(courseId);
+        }
     }
 }

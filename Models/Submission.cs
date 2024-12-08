@@ -17,13 +17,15 @@ namespace MD3SQLite.Models
         [SQLite.Ignore]
         public Assignment? Assignment { get; set; }
         [SQLite.Ignore]
-        public string AssignmentName => Assignment != null ? Assignment.Description : string.Empty;
+        public string AssignmentName => 
+            Assignment != null ? Assignment.Description : string.Empty;
 
         [SQLite.NotNull]
         public int StudentId { get; set; }
 
         [SQLite.Ignore]
-        public string StudentIdNumber => Student != null ? Student.StudentIdNumber : string.Empty;
+        public string StudentNameId => 
+            Student != null ? $"{Student.FullName}, {Student.StudentIdNumber}" : string.Empty;
         [SQLite.Ignore]
         public Student? Student { get; set; }
 

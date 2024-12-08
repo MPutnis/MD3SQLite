@@ -2,24 +2,49 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MD3SQLite.ViewModels"
+             xmlns:conv="clr-namespace:MD3SQLite.Converters"
              x:Class="MD3SQLite.Views.TeacherPage"
              Title="TeacherPage">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <conv:DateTimeToDateConverter x:Key="DateTimeToDateConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
     <StackLayout>
         <Label Text="Teacher List" FontSize="Large" />
         <Button Text="Add New Teacher" Command="{Binding AddTeacherCommand}" />
+
+        <Grid Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Label Text="Teacher Name" FontAttributes="Bold" Grid.Column="0" />
+            <Label Text="Contract Date" FontAttributes="Bold" Grid.Column="1" Margin="10,0,0,0" />
+            <Label Text="Gender" FontAttributes="Bold" Grid.Column="2" Margin="10,0,0,0" />
+        </Grid>
+        
         <ListView ItemsSource="{Binding Teachers}"
                   SelectedItem="{Binding SelectedTeacher}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="10">
-                            <Label Text="{Binding Id}" VerticalOptions="Center" />
-                            <Label Text="{Binding FullName}" VerticalOptions="Center" />
-                            <Label Text="{Binding ContractDate}" VerticalOptions="Center" Margin="10,0,0,0" />
+                        <Grid Padding="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding FullName}" VerticalOptions="Center" Grid.Column="0" />
+                            <Label Text="{Binding ContractDate, Converter={StaticResource DateTimeToDateConverter}}"
+                                   VerticalOptions="Center" Grid.Column="1" Margin="10,0,0,0" />
+                            <Label Text="{Binding Gender}" VerticalOptions="Center" Grid.Column="2" Margin="10,0,0,0" />
 
 
-                        </StackLayout>
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

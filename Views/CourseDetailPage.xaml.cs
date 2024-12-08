@@ -25,6 +25,6 @@ namespace MD3SQLite.Views
             }
         }
 
-        // TODO: make Course.TeacherId a picker from existing teachers
+        // Done: make Course.TeacherId a picker from existing teachers
     }
 }
