@@ -44,62 +44,85 @@ namespace MD3SQLite.ViewModels
         // add new student works now, can live without unselcting a student
         private async Task LoadStudentsAsync()
         {
-            var students = await _studentService.GetStudentsAsync();
-            // Bind the students to the view
-            Students = new ObservableCollection<Student>(students);
+            try
+            {
+                var students = await _studentService.GetStudentsAsync();
+                // Bind the students to the view
+                Students = new ObservableCollection<Student>(students);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading students: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading students. Please try again.");
+            }
         }
 
         private async Task AddStudentAsync()
         {
-            var newStudent = new Student();
-            await Shell.Current.GoToAsync(nameof(StudentDetailPage), new Dictionary<string, object>
+            try
             {
-                { "Student", newStudent }
-            });
+                var newStudent = new Student();
+                await Shell.Current.GoToAsync(nameof(StudentDetailPage), new Dictionary<string, object>
+                {
+                    { "Student", newStudent }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error adding student: {ex.Message}");
+                await ToastService.ShowToastAsync("Error adding student. Please try again.");
+            }
         }
 
         private async Task UpdateStudentAsync()
         {
-            if (SelectedStudent != null)
+            try
             {
-                await Shell.Current.GoToAsync(nameof(StudentDetailPage), new Dictionary<string, object>
+                if (SelectedStudent != null)
                 {
-                    { "Student", SelectedStudent }
-                });
+                    await Shell.Current.GoToAsync(nameof(StudentDetailPage), new Dictionary<string, object>
+                    {
+                        { "Student", SelectedStudent }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating student: {ex.Message}");
+                await ToastService.ShowToastAsync("Error updating student. Please try again.");
             }
         }
 
         private async Task DeleteStudentAsync()
         {
-            if (SelectedStudent != null)
-            { 
-                var mainPage = Application.Current?.MainPage;
-                if (mainPage != null)
+            try
+            {
+                if (SelectedStudent != null)
                 {
-
-                    bool confirm = await mainPage.DisplayAlert(
-                        "Confirm Delete",
-                        $"Are you sure you want to delete {SelectedStudent.FullName}?",
-                        "Yes",
-                        "No"
+                    var mainPage = Application.Current?.MainPage;
+                    if (mainPage != null)
+                    {
+                        bool confirm = await mainPage.DisplayAlert(
+                            "Confirm Delete",
+                            $"Are you sure you want to delete {SelectedStudent.FullName}?",
+                            "Yes",
+                            "No"
                         );
 
-                    if (confirm)
-                    {
-                        try
+                        if (confirm)
                         {
                             await _studentService.DeleteStudentAsync(SelectedStudent);
                             Debug.WriteLine($"Deleted student {SelectedStudent.FullName}");
                             SelectedStudent = null;
                             await LoadStudentsAsync();
                         }
-                        catch (Exception ex)
-                        {
-
-                            Debug.WriteLine($"Error deleting student: {ex.Message}");
-                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting student: {ex.Message}");
+                await ToastService.ShowToastAsync("Error deleting student. Please try again.");
             }
         }
     }

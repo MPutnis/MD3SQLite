@@ -67,25 +67,50 @@ namespace MD3SQLite.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving assignment: {ex.Message}");
+                await ToastService.ShowToastAsync("Error saving assignment. Please try again.");
             }
         }
         // Navigation from assignment details to assignment list
         private async Task NavigateBackAsync()
         {
-            await Shell.Current.GoToAsync("..");
+            try
+            {
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error navigating back: {ex.Message}");
+                await ToastService.ShowToastAsync("Error navigating back. Please try again.");
+            }
         }
 
         private async Task LoadCoursesAsync()
         {
-            var courses = await _courseService.GetCoursesAsync();
-            Courses = new ObservableCollection<Course>(courses);
+            try
+            {
+                var courses = await _courseService.GetCoursesAsync();
+                Courses = new ObservableCollection<Course>(courses);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading courses: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading courses. Please try again.");
+            }
         }
         public async void Initialize(Assignment assignment)
         {
-            Assignment = assignment;
-            DeadLine = assignment.DeadLine ?? DateTime.Now; // Initialize DeadLineDate and DeadLineTime
-            await LoadCoursesAsync();
-            SelectedCourse = Courses?.FirstOrDefault(c => c.Id == assignment.CourseId);
+            try
+            {
+                Assignment = assignment;
+                DeadLine = assignment.DeadLine ?? DateTime.Now; // Initialize DeadLineDate and DeadLineTime
+                await LoadCoursesAsync();
+                SelectedCourse = Courses?.FirstOrDefault(c => c.Id == assignment.CourseId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error initializing assignment details: {ex.Message}");
+                await ToastService.ShowToastAsync("Error initializing assignment details. Please try again.");
+            }
         }
     }
 }

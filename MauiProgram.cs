@@ -6,6 +6,8 @@ using MD3SQLite.ViewModels;
 using MD3SQLite.Views;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
+using System.Diagnostics;
 
 namespace MD3SQLite
 {
@@ -16,6 +18,7 @@ namespace MD3SQLite
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -23,9 +26,27 @@ namespace MD3SQLite
                 });
 
             // Registering services and ViewModels
-            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "Study.db3");
-            builder.Services.AddSingleton<DatabaseContext>(
-                s => ActivatorUtilities.CreateInstance<DatabaseContext>(s, dbPath));
+            string dbPath =string.Empty;
+            try
+            {
+                dbPath = Path.Combine(FileSystem.AppDataDirectory, "Study.db3");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error getting database path: {ex.Message}");
+                Application.Current?.MainPage?.DisplayAlert("Error", "Error getting database path", "OK");
+            }
+
+            try
+            {
+                builder.Services.AddSingleton<DatabaseContext>(
+                    s => ActivatorUtilities.CreateInstance<DatabaseContext>(s, dbPath));
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error creating DatabaseContext instance: {ex.Message}");
+                Application.Current?.MainPage?.DisplayAlert("Error", "Error creating DatabaseContext instance", "OK");
+            }
 
             // MainPage registrations
             builder.Services.AddSingleton<MainViewModel>();

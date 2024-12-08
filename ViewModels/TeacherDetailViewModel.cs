@@ -45,13 +45,22 @@ namespace MD3SQLite.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving teacher: {ex.Message}");
+                await ToastService.ShowToastAsync("Error saving teacher. Please try again.");
             }
         }
 
         // Navigation from teacher details to teacher list
         private async Task NavigateBackAsync()
         {
-            await Shell.Current.GoToAsync("..");
+            try
+            {
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error navigating back: {ex.Message}");
+                await ToastService.ShowToastAsync("Error navigating back. Please try again.");
+            }
         }
 
         public void Initialize(Teacher teacher)

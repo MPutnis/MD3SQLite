@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,37 +8,64 @@ using MD3SQLite.Models;
 
 namespace MD3SQLite.Services
 {
-    public class TeacherService
+    public class TeacherService(DatabaseContext databaseContext)
     {
-        private readonly DatabaseContext _databaseContext;
-
-        public TeacherService(DatabaseContext databaseContext)
-        {
-            _databaseContext = databaseContext;
-        }
+        private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all teachers
-        public Task<List<Teacher>> GetTeachersAsync()
+        public async Task<List<Teacher>> GetTeachersAsync()
         {
-            return _databaseContext.GetTeachersAsync();
+            try
+            {
+                return await _databaseContext.GetTeachersAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching teachers: {ex.Message}");
+                throw;
+            }
         }
 
         // Get a teacher by ID
-        public Task<Teacher> GetTeacherAsync(int id)
+        public async Task<Teacher> GetTeacherAsync(int id)
         {
-            return _databaseContext.GetTeacherAsync(id);
+            try
+            {
+                return await _databaseContext.GetTeacherAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching teacher with {id}: {ex.Message}");
+                throw;
+            }
         }
 
         // Save a teacher
-        public Task<int> SaveTeacherAsync(Teacher teacher)
+        public async Task<int> SaveTeacherAsync(Teacher teacher)
         {
-            return _databaseContext.SaveTeacherAsync(teacher);
+            try
+            {
+                return await _databaseContext.SaveTeacherAsync(teacher);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error saving teacher: {ex.Message}");
+                throw;
+            }
         }
 
         // Delete a teacher
-        public Task<int> DeleteTeacherAsync(Teacher teacher)
+        public async Task<int> DeleteTeacherAsync(Teacher teacher)
         {
-            return _databaseContext.DeleteTeacherAsync(teacher);
+            try
+            {
+                return await _databaseContext.DeleteTeacherAsync(teacher);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting teacher: {ex.Message}");
+                throw;
+            }
         }
     }
 }

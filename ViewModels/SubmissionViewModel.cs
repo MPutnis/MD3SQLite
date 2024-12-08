@@ -11,6 +11,7 @@ using MD3SQLite.Models;
 using MD3SQLite.Services;
 using MD3SQLite.Views;
 
+
 namespace MD3SQLite.ViewModels
 {
     public partial class SubmissionViewModel : ObservableObject
@@ -43,69 +44,92 @@ namespace MD3SQLite.ViewModels
         public IAsyncRelayCommand UpdateSubmissionCommand { get; }
         public IAsyncRelayCommand DeleteSubmissionCommand { get; }
         // done: can't unselct a student once selected, except by reentering the page
-        // add new student works now, can live without unselcting a student
+        // add new student works now, can live without unselecting a student
         private async Task LoadSubmissionsAsync()
         {
-            var submissions = await _submissionService.GetSubmissionsAsync();
-            foreach (var submission in submissions)
+            try
             {
-                submission.Assignment = await _assignmentService.GetAssignmentAsync(submission.AssignmentId);
-                submission.Student = await _studentService.GetStudentAsync(submission.StudentId);
+                var submissions = await _submissionService.GetSubmissionsAsync();
+                foreach (var submission in submissions)
+                {
+                    submission.Assignment = await _assignmentService.GetAssignmentAsync(submission.AssignmentId);
+                    submission.Student = await _studentService.GetStudentAsync(submission.StudentId);
+                }
+                // Bind the submissions to the view
+                Submissions = new ObservableCollection<Submission>(submissions);
             }
-            // Bind the submissions to the view
-            Submissions = new ObservableCollection<Submission>(submissions);
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading submissions: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading submissions. Please try again.");
+            }
         }
         private async Task AddSubmissionAsync()
         {
-            var newSubmission = new Submission();
-            await Shell.Current.GoToAsync(nameof(SubmissionsDetailPage), new Dictionary<string, object>
+            try
             {
-                { "Submission", newSubmission }
-            });
+                var newSubmission = new Submission();
+                await Shell.Current.GoToAsync(nameof(SubmissionsDetailPage), new Dictionary<string, object>
+                {
+                    { "Submission", newSubmission }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error adding submission: {ex.Message}");
+                await ToastService.ShowToastAsync("Error adding submission. Please try again.");
+            }
         }
 
         private async Task UpdateSubmissionAsync()
         {
-            if (SelectedSubmission != null)
+            try
             {
-                await Shell.Current.GoToAsync(nameof(SubmissionsDetailPage), new Dictionary<string, object>
+                if (SelectedSubmission != null)
                 {
-                    { "Submission", SelectedSubmission }
-                });
+                    await Shell.Current.GoToAsync(nameof(SubmissionsDetailPage), new Dictionary<string, object>
+                    {
+                        { "Submission", SelectedSubmission }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating submission: {ex.Message}");
+                await ToastService.ShowToastAsync("Error updating submission. Please try again.");
             }
         }
 
         private async Task DeleteSubmissionAsync()
         {
-            if (SelectedSubmission != null)
+            try
             {
-                var mainPage = Application.Current?.MainPage;
-                if (mainPage != null)
+                if (SelectedSubmission != null)
                 {
-                    // Done: display assignment description instead of ID
-                    bool confirm = await mainPage.DisplayAlert(
-                        "Confirm Delete",
-                        $"Are you sure you want to delete {SelectedSubmission.AssignmentId} {SelectedSubmission.SubmissionTime}?",
-                        "Yes",
-                        "No"
+                    var mainPage = Application.Current?.MainPage;
+                    if (mainPage != null)
+                    {
+                        bool confirm = await mainPage.DisplayAlert(
+                            "Confirm Delete",
+                            $"Are you sure you want to delete {SelectedSubmission.Assignment?.Description} {SelectedSubmission.SubmissionTime}?",
+                            "Yes",
+                            "No"
                         );
 
-                    if (confirm)
-                    {
-                        try
+                        if (confirm)
                         {
                             await _submissionService.DeleteSubmissionAsync(SelectedSubmission);
-                            Debug.WriteLine($"Deleted student {SelectedSubmission.AssignmentId} {SelectedSubmission.SubmissionTime}");
+                            Debug.WriteLine($"Deleted submission {SelectedSubmission.Assignment?.Description} {SelectedSubmission.SubmissionTime}");
                             SelectedSubmission = null;
                             await LoadSubmissionsAsync();
                         }
-                        catch (Exception ex)
-                        {
-
-                            Debug.WriteLine($"Error deleting student: {ex.Message}");
-                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting submission: {ex.Message}");
+                await ToastService.ShowToastAsync("Error deleting submission. Please try again.");
             }
         }
     }

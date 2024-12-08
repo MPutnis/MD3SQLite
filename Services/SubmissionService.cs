@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,26 +13,59 @@ namespace MD3SQLite.Services
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all submissions
-        public Task<List<Submission>> GetSubmissionsAsync()
+        public async Task<List<Submission>> GetSubmissionsAsync()
         {
-            return _databaseContext.GetSubmissionsAsync();
+            try
+            {
+                return await _databaseContext.GetSubmissionsAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching submissions: {ex.Message}");
+                throw;
+            }
         }
 
         // Get a submission by ID
-        public Task<Submission> GetSubmissionAsync(int id)
+        public async Task<Submission> GetSubmissionAsync(int id)
         {
-            return _databaseContext.GetSubmissionAsync(id);
+            try
+            {
+                return await _databaseContext.GetSubmissionAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching submission with {id}: {ex.Message}");
+                throw;
+            }
         }
 
         // Save a submission
-        public Task<int> SaveSubmissionAsync(Submission submission)
+        public async Task<int> SaveSubmissionAsync(Submission submission)
         {
-            return _databaseContext.SaveSubmissionAsync(submission);
+            try
+            {
+                return await _databaseContext.SaveSubmissionAsync(submission);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error saving submission: {ex.Message}");
+                throw;
+            }
         }
+
         // Delete a submission
-        public Task DeleteSubmissionAsync(Submission submission)
+        public async Task DeleteSubmissionAsync(Submission submission)
         {
-            return _databaseContext.DeleteSubmissionAsync(submission);
+            try
+            {
+                await _databaseContext.DeleteSubmissionAsync(submission);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting submission: {ex.Message}");
+                throw;
+            }
         }
     }
 }

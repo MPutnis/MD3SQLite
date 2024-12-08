@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,27 +13,62 @@ namespace MD3SQLite.Services
         private readonly DatabaseContext _databaseContext = databaseContext;
 
         // Get all courses
-        public Task<List<Course>> GetCoursesAsync()
+        public async Task<List<Course>> GetCoursesAsync()
         {
-            return _databaseContext.GetCoursesAsync();
+            try
+            {
+                return await _databaseContext.GetCoursesAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching courses: {ex.Message}");
+                throw;
+            }
+            
         }
 
         // Get a course by ID
-        public Task<Course> GetCourseAsync(int id)
+        public async Task<Course> GetCourseAsync(int id)
         {
-            return _databaseContext.GetCourseAsync(id);
+            try
+            {
+                return await _databaseContext.GetCourseAsync(id);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching course with {id}: {ex.Message}");
+                throw;
+            }
         }
 
         // Save a course
-        public Task<int> SaveCourseAsync(Course course)
+        public async Task<int> SaveCourseAsync(Course course)
         {
-            return _databaseContext.SaveCourseAsync(course);
+            try
+            {
+                return await _databaseContext.SaveCourseAsync(course);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error saving course: {ex.Message}");
+                throw;
+            }
         }
 
         // Delete a course
-        public Task<int> DeleteCourseAsync(Course course)
+        public async Task<int> DeleteCourseAsync(Course course)
         {
-            return _databaseContext.DeleteCourseAsync(course);
+            try
+            {
+                return await _databaseContext.DeleteCourseAsync(course);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting course: {ex.Message}");
+                throw;
+            }
+            
         }
     }
 }

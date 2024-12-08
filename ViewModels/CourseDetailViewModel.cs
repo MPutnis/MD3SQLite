@@ -60,36 +60,69 @@ namespace MD3SQLite.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving course: {ex.Message}");
+                await ToastService.ShowToastAsync("Error saving course. Please try again.");
             }
         }
 
         // Navigation from course details to course list
         private async Task NavigateBackAsync()
         {
-            await Shell.Current.GoToAsync("..");
+            try
+            {
+                await Shell.Current.GoToAsync("..");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error navigating back: {ex.Message}");
+                await ToastService.ShowToastAsync("Error navigating back. Please try again.");
+            }
         }
 
         private async Task LoadTeachersAsync()
         {
-            var teachers = await _teacherService.GetTeachersAsync();
-            Teachers = new ObservableCollection<Teacher>(teachers);
+            try
+            {
+                var teachers = await _teacherService.GetTeachersAsync();
+                Teachers = new ObservableCollection<Teacher>(teachers);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading teachers: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading teachers. Please try again.");
+            }
         }
 
         private async Task LoadAssignmentsAsync()
         {
-            if (Course != null)
+            try
             {
-                var assignments = await _assignmentService.GetAssignmentsByCourseIdAsync(Course.Id);
-                Assignments = new ObservableCollection<Assignment>(assignments);
+                if (Course != null)
+                {
+                    var assignments = await _assignmentService.GetAssignmentsByCourseIdAsync(Course.Id);
+                    Assignments = new ObservableCollection<Assignment>(assignments);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading assignments: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading assignments. Please try again.");
             }
         }
 
         public async void Initialize(Course course)
         {
-            Course = course;
-            await LoadTeachersAsync();
-            SelectedTeacher = Teachers?.FirstOrDefault(t => t.Id == course.TeacherId);
-            await LoadAssignmentsAsync();
+            try
+            {
+                Course = course;
+                await LoadTeachersAsync();
+                SelectedTeacher = Teachers?.FirstOrDefault(t => t.Id == course.TeacherId);
+                await LoadAssignmentsAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error initializing course details: {ex.Message}");
+                await ToastService.ShowToastAsync("Error initializing course details. Please try again.");
+            }
         }
     }
 }

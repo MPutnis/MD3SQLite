@@ -82,8 +82,10 @@ namespace MD3SQLite.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving submission: {ex.Message}");
+                await ToastService.ShowToastAsync("Error saving submission. Please try again.");
             }
         }
+
         // Navigation from submission details to submission list
         private async Task NavigateBackAsync()
         {
@@ -92,23 +94,47 @@ namespace MD3SQLite.ViewModels
 
         private async Task LoadAssignmentsAsync()
         {
-            var assignments = await _assignmentService.GetAssignmentsAsync();
-            Assignments = new ObservableCollection<Assignment>(assignments);
+            try
+            {
+                var assignments = await _assignmentService.GetAssignmentsAsync();
+                Assignments = new ObservableCollection<Assignment>(assignments);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading assignments: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading assignments. Please try again.");
+            }
         }
 
         private async Task LoadStudentsAsync()
         {
-            var students = await _studentService.GetStudentsAsync();
-            Students = new ObservableCollection<Student>(students);
+            try
+            {
+                var students = await _studentService.GetStudentsAsync();
+                Students = new ObservableCollection<Student>(students);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading students: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading students. Please try again.");
+            }
         }
         public async void Initialize(Submission submission)
         {
-            Submission = submission;
-            SubmissionDateTime = submission.SubmissionTime ?? DateTime.Now; // Initialize SubmissionDate and SubmissionTime
-            await LoadAssignmentsAsync();
-            await LoadStudentsAsync();
-            SelectedAssignment = Assignments?.FirstOrDefault(a => a.Id == submission.AssignmentId);
-            SelectedStudent = Students?.FirstOrDefault(s => s.Id == submission.StudentId);
+            try
+            {
+                Submission = submission;
+                SubmissionDateTime = submission.SubmissionTime ?? DateTime.Now; // Initialize SubmissionDate and SubmissionTime
+                await LoadAssignmentsAsync();
+                await LoadStudentsAsync();
+                SelectedAssignment = Assignments?.FirstOrDefault(a => a.Id == submission.AssignmentId);
+                SelectedStudent = Students?.FirstOrDefault(s => s.Id == submission.StudentId);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error initializing submission details: {ex.Message}");
+                await ToastService.ShowToastAsync("Error initializing submission details. Please try again.");
+            }
         }
     }
 }

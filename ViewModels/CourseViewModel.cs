@@ -46,61 +46,85 @@ namespace MD3SQLite.ViewModels
         // add new course works now, can live without unselcting a course
         private async Task LoadCoursesAsync()
         {
-            var courses = await _courseService.GetCoursesAsync();
-            foreach (var course in courses)
+            try
             {
-                course.Teacher = await _teacherService.GetTeacherAsync(course.TeacherId);
+                var courses = await _courseService.GetCoursesAsync();
+                foreach (var course in courses)
+                {
+                    course.Teacher = await _teacherService.GetTeacherAsync(course.TeacherId);
+                }
+                // Bind the courses to the view
+                Courses = new ObservableCollection<Course>(courses);
             }
-            // Bind the courses to the view
-            Courses = new ObservableCollection<Course>(courses);
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading courses: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading courses. Please try again.");
+            }
         }
         private async Task AddCourseAsync()
         {
-            var newCourse = new Course();
-            await Shell.Current.GoToAsync(nameof(CourseDetailPage), new Dictionary<string, object>
+            try
             {
-                { "Course", newCourse }
-            });
+                var newCourse = new Course();
+                await Shell.Current.GoToAsync(nameof(CourseDetailPage), new Dictionary<string, object>
+                {
+                    { "Course", newCourse }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error adding course: {ex.Message}");
+                await ToastService.ShowToastAsync("Error adding course. Please try again.");
+            }
         }
         private async Task UpdateCourseAsync()
         {
-            if (SelectedCourse != null)
+            try
             {
-                await Shell.Current.GoToAsync(nameof(CourseDetailPage), new Dictionary<string, object>
+                if (SelectedCourse != null)
                 {
-                    { "Course", SelectedCourse }
-                });
+                    await Shell.Current.GoToAsync(nameof(CourseDetailPage), new Dictionary<string, object>
+                    {
+                        { "Course", SelectedCourse }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating course: {ex.Message}");
+                await ToastService.ShowToastAsync("Error updating course. Please try again.");
             }
         }
         private async Task DeleteCourseAsync()
         {
-            if (SelectedCourse != null)
+            try
             {
-                var mainPage = Application.Current?.MainPage;
-                if (mainPage != null)
+                if (SelectedCourse != null)
                 {
-                    bool confirm = await mainPage.DisplayAlert(
-                        "Delete Course",
-                        $"Are you sure you want to delete {SelectedCourse.Name}?",
-                        "Yes",
-                        "No"
-                        );
-                    if (confirm)
+                    var mainPage = Application.Current?.MainPage;
+                    if (mainPage != null)
                     {
-                        try
+                        bool confirm = await mainPage.DisplayAlert(
+                            "Delete Course",
+                            $"Are you sure you want to delete {SelectedCourse.Name}?",
+                            "Yes",
+                            "No"
+                        );
+                        if (confirm)
                         {
                             await _courseService.DeleteCourseAsync(SelectedCourse);
                             Debug.WriteLine($"Course deleted: {SelectedCourse.Name}");
                             SelectedCourse = null;
                             await LoadCoursesAsync();
                         }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"Error deleting course: {ex.Message}");
-
-                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting course: {ex.Message}");
+                await ToastService.ShowToastAsync("Error deleting course. Please try again.");
             }
         }
     }

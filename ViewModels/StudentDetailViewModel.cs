@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace MD3SQLite.ViewModels
 {
-    // TODO: data validation and error handling
+    // TODO: data validation and error handling, when editing details: can save with empty fields
+    // TODO: can delete student that has submission, submission stays with no student
     public partial class StudentDetailViewModel : ObservableObject
     {
         private readonly StudentService _studentService;
@@ -48,6 +49,7 @@ namespace MD3SQLite.ViewModels
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error saving student: {ex.Message}");
+                await ToastService.ShowToastAsync("Error saving student. Please try again.");
             }
         }
 

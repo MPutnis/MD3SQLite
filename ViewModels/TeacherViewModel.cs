@@ -38,59 +38,84 @@ namespace MD3SQLite.ViewModels
 
         private async Task LoadTeachersAsync()
         {
-            var teachers = await _teacherService.GetTeachersAsync();
-            // Bind the teachers to the view
-            Teachers = new ObservableCollection<Teacher>(teachers);
+            try
+            {
+                var teachers = await _teacherService.GetTeachersAsync();
+                // Bind the teachers to the view
+                Teachers = new ObservableCollection<Teacher>(teachers);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error loading teachers: {ex.Message}");
+                await ToastService.ShowToastAsync("Error loading teachers. Please try again.");
+            }
         }
 
         private async Task AddTeacherAsync()
         {
-            var newTeacher = new Teacher();
-            await Shell.Current.GoToAsync(nameof(TeacherDetailPage), new Dictionary<string, object>
+            try
             {
-                { "Teacher", newTeacher }
-            });
+                var newTeacher = new Teacher();
+                await Shell.Current.GoToAsync(nameof(TeacherDetailPage), new Dictionary<string, object>
+                {
+                    { "Teacher", newTeacher }
+                });
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error adding teacher: {ex.Message}");
+                await ToastService.ShowToastAsync("Error adding teacher. Please try again.");
+            }
         }
 
         private async Task UpdateTeacherAsync()
         {
-            if (SelectedTeacher != null)
+            try
             {
-                await Shell.Current.GoToAsync(nameof(TeacherDetailPage), new Dictionary<string, object>
+                if (SelectedTeacher != null)
                 {
-                    { "Teacher", SelectedTeacher }
-                });
+                    await Shell.Current.GoToAsync(nameof(TeacherDetailPage), new Dictionary<string, object>
+                    {
+                        { "Teacher", SelectedTeacher }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error updating teacher: {ex.Message}");
+                await ToastService.ShowToastAsync("Error updating teacher. Please try again.");
             }
         }
 
         private async Task DeleteTeacherAsync()
         {
-            if (SelectedTeacher != null)
+            try
             {
-                var mainPage = Application.Current?.MainPage;
-                if (mainPage != null)
+                if (SelectedTeacher != null)
                 {
-                    bool confirm = await mainPage.DisplayAlert(
-                        "Delete Teacher",
-                        $"Are you sure you want to delete {SelectedTeacher.Name} {SelectedTeacher.Surname}?",
-                        "Yes",
-                        "No"
-                        );
-                    if (confirm)
+                    var mainPage = Application.Current?.MainPage;
+                    if (mainPage != null)
                     {
-                        try
+                        bool confirm = await mainPage.DisplayAlert(
+                            "Delete Teacher",
+                            $"Are you sure you want to delete {SelectedTeacher.Name} {SelectedTeacher.Surname}?",
+                            "Yes",
+                            "No"
+                        );
+                        if (confirm)
                         {
                             await _teacherService.DeleteTeacherAsync(SelectedTeacher);
                             Debug.WriteLine($"Teacher deleted: {SelectedTeacher.Name} {SelectedTeacher.Surname}");
                             SelectedTeacher = null;
                             await LoadTeachersAsync();
                         }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine($"Error deleting teacher: {ex.Message}");
-                        }
                     }
-                }                
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error deleting teacher: {ex.Message}");
+                await ToastService.ShowToastAsync("Error deleting teacher. Please try again.");
             }
         }
     }
