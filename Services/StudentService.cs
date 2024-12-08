@@ -60,6 +60,13 @@ namespace MD3SQLite.Services
         {
             try
             {
+                var submissions = await _databaseContext.GetSubmissionsByStudentIdAsync(student.Id);
+                if (submissions.Count != 0)
+                {
+                    await Application.Current?.MainPage?.DisplayAlert("Constraint violation","Cannot delete student with existing submissions.", "OK");
+                    throw new InvalidOperationException("Cannot delete student with existing submissions.");
+                }
+
                 return await _databaseContext.DeleteStudentAsync(student);
             }
             catch (Exception ex)

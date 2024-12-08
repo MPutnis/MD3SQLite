@@ -61,6 +61,12 @@ namespace MD3SQLite.Services
         {
             try
             {
+                var assignments = await _databaseContext.GetAssignmentsByCourseIdAsync(course.Id);
+                if (assignments.Count > 0)
+                {
+                    Application.Current.MainPage.DisplayAlert("Error", "Cannot delete course with assignments", "OK");
+                    throw new InvalidOperationException("Cannot delete course with assignments");
+                }
                 return await _databaseContext.DeleteCourseAsync(course);
             }
             catch (Exception ex)

@@ -267,6 +267,20 @@ namespace MD3SQLite.Services
             }
         }
 
+        // Get courses by teacher ID
+        public async Task<List<Course>> GetCoursesByTeacherIdAync(int teacherId)
+        {
+            try
+            {
+                return await _database.Table<Course>().Where(c => c.TeacherId == teacherId).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching courses by teacher ID: {ex.Message}");
+                throw;
+            }
+        }
+
 
         // ASSIGNMENT CRUD OPERATIONS
 
@@ -413,6 +427,34 @@ namespace MD3SQLite.Services
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error deleting submission: {ex.Message}");
+                throw;
+            }
+        }
+
+        // Get submissions by student ID
+        public async Task<List<Submission>> GetSubmissionsByStudentIdAsync(int studentId)
+        {
+            try
+            {
+                return await _database.Table<Submission>().Where(s => s.StudentId == studentId).ToListAsync();
+            }
+            catch (Exception ex)
+            {               
+                Debug.WriteLine($"Error fetching submissions by student ID: {ex.Message}");
+                throw;
+            }
+        }
+
+        // Get submissions by assignment ID
+        public async Task<List<Submission>> GetSubmissionsByAssignmentIdAsync(int assignmentId)
+        {
+            try
+            {
+                return await _database.Table<Submission>().Where(s => s.AssignmentId == assignmentId).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error fetching submissions by assignment ID: {ex.Message}");
                 throw;
             }
         }
@@ -613,5 +655,7 @@ namespace MD3SQLite.Services
 
             return sb.ToString();
         }
+
+        
     }
 }

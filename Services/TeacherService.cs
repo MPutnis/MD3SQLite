@@ -59,6 +59,13 @@ namespace MD3SQLite.Services
         {
             try
             {
+                var courses = await _databaseContext.GetCoursesByTeacherIdAync(teacher.Id);
+                if (courses.Count > 0)
+                {
+                    await Application.Current?.MainPage?.DisplayAlert("Error", "Cannot delete teacher with assigned courses.", "OK");
+                    throw new InvalidOperationException("Cannot delete teacher with assigned courses.");
+                }
+
                 return await _databaseContext.DeleteTeacherAsync(teacher);
             }
             catch (Exception ex)
