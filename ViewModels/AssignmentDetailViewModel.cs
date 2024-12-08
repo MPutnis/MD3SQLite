@@ -55,7 +55,7 @@ namespace MD3SQLite.ViewModels
         {
             try
             {
-                if (Assignment != null && SelectedCourse != null)
+                if (Assignment != null && Assignment.Description != string.Empty && SelectedCourse != null)
                 {
                     Assignment.CourseId = SelectedCourse.Id;
                     Assignment.DeadLine = DeadLine;

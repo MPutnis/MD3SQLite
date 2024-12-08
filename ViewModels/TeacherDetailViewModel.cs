@@ -35,7 +35,7 @@ namespace MD3SQLite.ViewModels
         {
             try
             {
-                if (Teacher != null)
+                if (Teacher != null && Teacher.Name != string.Empty && Teacher.Surname != string.Empty && Teacher.ContractDate < DateTime.Now)
                 {
                     await _teacherService.SaveTeacherAsync(Teacher);
                     Debug.WriteLine($"Teacher saved: {Teacher.Name} {Teacher.Surname}");

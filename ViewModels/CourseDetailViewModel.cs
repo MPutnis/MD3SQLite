@@ -49,7 +49,7 @@ namespace MD3SQLite.ViewModels
         {
             try
             {
-                if (Course != null && SelectedTeacher != null)
+                if (Course != null && Course.Name != string.Empty && SelectedTeacher != null)
                 {
                     Course.TeacherId = SelectedTeacher.Id;
                     await _courseService.SaveCourseAsync(Course);

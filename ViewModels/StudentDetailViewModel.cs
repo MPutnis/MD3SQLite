@@ -39,7 +39,7 @@ namespace MD3SQLite.ViewModels
 
             try
             {
-                if (Student != null)
+                if (Student != null && Student.Name != string.Empty && Student.Surname != string.Empty && Student.StudentIdNumber != string.Empty)
                 {
                     await _studentService.SaveStudentAsync(Student);
                     Debug.WriteLine($"Student saved: {Student.Name} {Student.Surname} {Student.StudentIdNumber}");
