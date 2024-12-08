@@ -1,0 +1,27 @@
+﻿	Pirmkārt par izmantotajiem resursiem: kodā komentāros tas nav minēts,
+(jo domāju, ka pietiks pateikt šeit) bet gandrīz visa "projekta" izstrādes
+laikā paļāvos uz GitHub Copilot( par labu vai par sliktu, bet tā nu tas ir).
+Viens izņēmums tam ir https://learn.microsoft.com/en-us/dotnet/maui/fundamentals/shell/navigation?view=net-maui-8.0,
+palīdzēja saprast radušās navigācijas problēmas. Kaut kādos brīžos meklēju arī citus resursus, bet tie 
+beigās neizrādījās derīgi, līdz ar to arī tie netiks minēti.
+
+	Otrkārt, par Connection String, aptuveni trīs dienas nomocījos mēģinot pievienot appsettings.json failu
+un C:\Temp\ConnS.txt failu, bet nemitīgi radās problēmas ar tiem. Tāpēc atmetu tam visam ar roku un izlēmu
+izmantot SQLite datubāzi, kurai nevajag papildus konfigurācijas failus. Datubāze tiek veidota lietotnes 
+failu sistēmā( ja pareizi sapratu "Path.Combine(FileSystem.AppDataDirectory, "Study.db3");"), cerams, ka
+no tā neradīsies piekļuves problēmas uz Jūsu datora.
+
+	Treškārt, izvēlējos visu projektu veidot ar MVVM pieeju. Models mape satur datu modeļus, no kuriem
+tika veidota datubāze. Services mape satur datubāzes konteksta klasi, kura nodrošina datubāzes un 
+tās tabulu izveidi, testa datu izveidošanu un datu dzēšanu no datubāzes. ViewModels mape satur lapu apstrādes
+loģiku. Views mape satur lapas, kuras tiek attēlotas lietotājam. 
+	
+	Ceturtkārt, iespējams, ka būšu pāršāvis pār strīpu ar try/ catch blokiem. Turpretī ievades validācija ir 
+ļoti minimāla. It kā lietotnei nevajadzētu ļaut saglabāt tukšus ierakstus, bet iespējams, ka būšu ko palaidis
+garām šajā virzienā. Īsti nav pievienotas validācijas uz datu tipiem, bet piemēram Submission Score nenomainās,
+ja ievade ir tukša, vai nav cipari... Šajā ziņā nepaveicās arī ar to, ka nesāku veidot projektu ar Entity Framework,
+iespējams būtu bijis vieglāk īstenot validāciju, bet beigās vēl trakāk šķita mēģināt pielāgot projektu EF. 
+Pašam arī nācās veidot relāciju ierobežojumus ierakstu dzēšanai. Ja no tā rodas kādas citas problēmas, tad neko darīt.
+
+P.s. "Seed Database" vajadzētu strādāt tikai attiecībā uz tukšām tabulām, bet mēģina veidot datus visām vienlaicīgi.
+P.s.s. "Clear Database" neprasa apstiprinājumu par dzēšanu.

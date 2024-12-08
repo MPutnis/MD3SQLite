@@ -65,7 +65,7 @@ namespace MD3SQLite.Services
                 var submissions = await _databaseContext.GetSubmissionsByAssignmentIdAsync(assignment.Id);
                 if (submissions.Count > 0)
                 {
-                    Application.Current.MainPage.DisplayAlert("Error", "Cannot delete assignment with submissions", "OK");
+                    await Application.Current.MainPage.DisplayAlert("Error", "Cannot delete assignment with submissions", "OK");
                     throw new InvalidOperationException("Cannot delete assignment with submissions");
                 }
 

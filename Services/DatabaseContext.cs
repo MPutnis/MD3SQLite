@@ -13,7 +13,7 @@ namespace MD3SQLite.Services
     {
         private readonly SQLiteAsyncConnection _database;
 
-        // TODO: add try/ catch blocks to handle database interaction exceptions
+        // Done: add try/ catch blocks to handle database interaction exceptions
         public DatabaseContext(string dbPath)
         {
             try

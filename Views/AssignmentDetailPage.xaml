@@ -15,8 +15,7 @@
 
 
         <Label Text="Due Date" />
-        <DatePicker Date="{Binding DeadLineDate, Mode=TwoWay}"
-                    DateSelected="DatePicker_DateSelected" />
+        <DatePicker Date="{Binding DeadLineDate, Mode=TwoWay}" />
 
         <Label Text="Due Time" />
         <TimePicker Time="{Binding DeadLineTime, Mode=TwoWay}" />
